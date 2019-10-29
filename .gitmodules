@@ -1,0 +1,9 @@
+[submodule "Amsel.Authentication.DTO"]
+	path = Amsel.Authentication.DTO
+	url = https://github.com/Examed/Amsel.Authentication.DTO
+[submodule "Amsel.Authentication.Resources"]
+	path = Amsel.Authentication.Resources
+	url = https://github.com/Examed/Amsel.Authentication.Resources
+[submodule "Amsel.Authentication.Ingress"]
+	path = Amsel.Authentication.Ingress
+	url = https://github.com/Examed/Amsel.Authentication.Ingress
