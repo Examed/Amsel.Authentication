@@ -1,9 +1,0 @@
-[submodule "resources"]
-	path = resources
-	url = https://github.com/Examed/Amsel.Authentication.Resources
-[submodule "ingress"]
-	path = ingress
-	url = https://github.com/Examed/Amsel.Authentication.Ingress
-[submodule "dto"]
-	path = dto
-	url = https://github.com/Examed/Amsel.Authentication.dto
