@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Amsel.DTO.Authentication.Enums;
+using Amsel.Enums.Authentication.Enums;
 using JetBrains.Annotations;
 
-namespace Amsel.DTO.Authentication.EnumStrings
+namespace Amsel.Enums.Authentication.EnumStrings
 {
     public static class TwitchScopeHelper
     {

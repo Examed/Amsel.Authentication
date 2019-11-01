@@ -1,4 +1,4 @@
-﻿using Amsel.DTO.Authentication.Enums;
+﻿using Amsel.Enums.Authentication.Enums;
 
 namespace Amsel.DTO.Authentication.Models
 {

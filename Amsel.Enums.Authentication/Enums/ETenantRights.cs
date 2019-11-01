@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Amsel.DTO.Authentication.Enums
+namespace Amsel.Enums.Authentication.Enums
 {
     [Flags]
     public enum ETenantRights

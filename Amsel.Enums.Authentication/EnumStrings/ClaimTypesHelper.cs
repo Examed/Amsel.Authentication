@@ -1,6 +1,6 @@
-﻿using Amsel.DTO.Authentication.Enums;
+﻿using Amsel.Enums.Authentication.Enums;
 
-namespace Amsel.DTO.Authentication.EnumStrings
+namespace Amsel.Enums.Authentication.EnumStrings
 {
     public static class ClaimTypesHelper
     {

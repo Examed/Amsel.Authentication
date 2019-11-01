@@ -1,4 +1,4 @@
-﻿namespace Amsel.DTO.Authentication.Enums
+﻿namespace Amsel.Enums.Authentication.Enums
 {
     public enum EClaimTypes
     {
