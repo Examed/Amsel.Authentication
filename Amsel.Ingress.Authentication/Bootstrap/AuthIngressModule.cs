@@ -6,10 +6,7 @@ namespace Amsel.Ingress.Authentication.Bootstrap
     /// <inheritdoc />
     public class AuthIngressModule : Module
     {
-        #region PROTECTED METHODES
-
-        protected override void Load(ContainerBuilder builder)
-        {
+        protected override void Load(ContainerBuilder builder) {
             builder.RegisterType<TenantIngress>();
             builder.RegisterType<AuthIngress>();
             builder.RegisterType<TestIngress>();
@@ -17,7 +14,5 @@ namespace Amsel.Ingress.Authentication.Bootstrap
 
             base.Load(builder);
         }
-
-        #endregion
     }
 }

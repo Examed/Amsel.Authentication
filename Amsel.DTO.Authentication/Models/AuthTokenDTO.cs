@@ -7,24 +7,20 @@ namespace Amsel.DTO.Authentication.Models
     {
         #region  CONSTRUCTORS
 
-        protected AuthTokenDTO()
-        {
-        }
-        
-        public AuthTokenDTO(string token, DateTime expireTime)
-        {
-            Token = token;
-            RefreshToken = null;
-            ExpireTime = expireTime;
+        protected AuthTokenDTO() { }
+
+        public AuthTokenDTO(string token, DateTime expireTime) {
+            Token             = token;
+            RefreshToken      = null;
+            ExpireTime        = expireTime;
             RefreshExpireTime = expireTime;
         }
 
         [JsonConstructor]
-        public AuthTokenDTO(string token, string refreshToken, DateTime expireTime, DateTime refreshExpireTime)
-        {
-            Token = token;
-            RefreshToken = refreshToken;
-            ExpireTime = expireTime;
+        public AuthTokenDTO(string token, string refreshToken, DateTime expireTime, DateTime refreshExpireTime) {
+            Token             = token;
+            RefreshToken      = refreshToken;
+            ExpireTime        = expireTime;
             RefreshExpireTime = refreshExpireTime;
         }
 
@@ -38,34 +34,29 @@ namespace Amsel.DTO.Authentication.Models
 
         public string Token { get; set; }
 
-        public bool Expired()
-        {
+        public bool Expired() {
             if (string.IsNullOrEmpty(Token))
                 return true;
 
             return ExpireTime < DateTime.UtcNow || RefreshExpireTime < DateTime.UtcNow;
         }
 
-        public bool RefreshExpired()
-        {
+        public bool RefreshExpired() {
             if (string.IsNullOrEmpty(RefreshToken))
                 return true;
 
             return RefreshExpireTime < DateTime.UtcNow.AddMinutes(1);
         }
 
-        public void RemoveToken()
-        {
+        public void RemoveToken() {
             Token = null;
         }
 
-        public bool HasRefreshToken()
-        {
+        public bool HasRefreshToken() {
             return RefreshToken != null && !RefreshExpired();
         }
 
-        public bool HasToken()
-        {
+        public bool HasToken() {
             return Token != null && !Expired();
         }
     }

@@ -14,26 +14,20 @@ namespace Amsel.Ingress.Authentication.Ingress
 {
     public class AccountIngress : GenericIngress
     {
-        [NotNull]
-        private static readonly APIAddress AllAccountURL = new APIAddress(AuthEndpointResources.ENDPOINT,
-              AuthEndpointResources.ACCOUNT,
-              AccountControllerResources.GET_ALL);
+        [NotNull] private static readonly APIAddress AllAccountURL = new APIAddress(AuthEndpointResources.ENDPOINT,
+                                                                                    AuthEndpointResources.ACCOUNT,
+                                                                                    AccountControllerResources.GET_ALL);
 
         #region  CONSTRUCTORS
 
-        public AccountIngress(IAuthService authenticationService) : base(authenticationService)
-        {
-        }
+        public AccountIngress(IAuthService authenticationService) : base(authenticationService) { }
 
         #endregion
 
         [NotNull]
-        public async Task<IEnumerable<AccountDTO>> GetAllAsync()
-        {
+        public async Task<IEnumerable<AccountDTO>> GetAllAsync() {
             HttpResponseMessage response = await GetAsync(AllAccountURL);
             return await response.DeserializeOrDefaultAsync<IEnumerable<AccountDTO>>();
         }
-
-
     }
 }

@@ -13,33 +13,26 @@ namespace Amsel.Ingress.Authentication.Ingress
 {
     public class AuthIngress : GenericIngress
     {
-        [NotNull]
-        public static readonly APIAddress PublicKeyURL = new APIAddress(AuthEndpointResources.ENDPOINT,
-             AuthEndpointResources.KEY,
-             KeyControllerResources.PUBLIC_KEY);
+        [NotNull] public static readonly APIAddress PublicKeyURL = new APIAddress(AuthEndpointResources.ENDPOINT,
+                                                                                  AuthEndpointResources.KEY,
+                                                                                  KeyControllerResources.PUBLIC_KEY);
 
         #region  CONSTRUCTORS
 
-        public AuthIngress()
-        {
-        }
+        public AuthIngress() { }
 
-        public AuthIngress(IAuthService authenticationService) : base(authenticationService)
-        {
-        }
+        public AuthIngress(IAuthService authenticationService) : base(authenticationService) { }
 
         #endregion
 
         [NotNull]
-        public async Task<RSACryptoServiceProvider> GetPublicKeyAsync()
-        {
+        public async Task<RSACryptoServiceProvider> GetPublicKeyAsync() {
             string content = await GetPublicKeyStringAsync();
             return RSACryptoKeyHelper.PublicKeyFromString(content);
         }
 
         [NotNull]
-        private async Task<string> GetPublicKeyStringAsync()
-        {
+        private async Task<string> GetPublicKeyStringAsync() {
             HttpResponseMessage response = await GetAsync(PublicKeyURL);
             response.EnsureSuccessStatusCode();
             return await response?.Content?.ReadAsStringAsync();

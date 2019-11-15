@@ -11,6 +11,4 @@
         public const string TWITCH = "twitch";
         public const string SESSION = "session";
     }
-
-
 }

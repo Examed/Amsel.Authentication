@@ -8,10 +8,7 @@ namespace Amsel.Enums.Authentication.EnumStrings
 {
     public static class TwitchScopeHelper
     {
-        #region Public Methods
-
-        public static ETwitchScope GetScopes([NotNull] this IList<string> scopeList)
-        {
+        public static ETwitchScope GetScopes([NotNull] this IList<string> scopeList) {
             if (scopeList == null) throw new ArgumentNullException(nameof(scopeList));
             ETwitchScope scope = ETwitchScope.DEFAULT;
 
@@ -83,8 +80,7 @@ namespace Amsel.Enums.Authentication.EnumStrings
             return scope;
         }
 
-        public static string ToScopeString(this ETwitchScope scope)
-        {
+        public static string ToScopeString(this ETwitchScope scope) {
             StringBuilder builder = new StringBuilder();
             if (scope.HasFlag(ETwitchScope.CHANNEL_CHECK_SUBSCRIPTION))
                 builder.Append("channel_check_subscription ");
@@ -152,7 +148,5 @@ namespace Amsel.Enums.Authentication.EnumStrings
                 builder.Append("whispers:edit ");
             return builder.ToString().Trim();
         }
-
-        #endregion Public Methods
     }
 }

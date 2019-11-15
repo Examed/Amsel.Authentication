@@ -14,24 +14,18 @@ namespace Amsel.Ingress.Authentication.Ingress
 
         #region  CONSTRUCTORS
 
-        public TestIngress()
-        {
-        }
+        public TestIngress() { }
 
-        public TestIngress(IAuthService authenticationService) : base(authenticationService)
-        {
-        }
+        public TestIngress(IAuthService authenticationService) : base(authenticationService) { }
 
         #endregion
 
-        public async Task<string> GetAnonymousTest()
-        {
+        public async Task<string> GetAnonymousTest() {
             HttpResponseMessage response = await GetAsync(AnonymousURL);
             return await response?.Content?.ReadAsStringAsync();
         }
 
-        public async Task<string> GetAuthorizedTest()
-        {
+        public async Task<string> GetAuthorizedTest() {
             HttpResponseMessage response = await GetAsync(AuthorizedURL);
             return await response?.Content?.ReadAsStringAsync();
         }
