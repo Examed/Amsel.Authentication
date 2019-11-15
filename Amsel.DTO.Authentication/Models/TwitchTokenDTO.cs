@@ -4,7 +4,7 @@ namespace Amsel.DTO.Authentication.Models
 {
     public class TwitchTokenDTO
     {
-        #region  CONSTRUCTORS
+        #region CONSTRUCTORS
 
         public TwitchTokenDTO(string accessToken, ETwitchScope scope)
         {
@@ -12,10 +12,14 @@ namespace Amsel.DTO.Authentication.Models
             Scope = scope;
         }
 
-        #endregion
+        #endregion CONSTRUCTORS
+
+        #region Public Properties
 
         public virtual string AccessToken { get; set; }
 
         public virtual ETwitchScope Scope { get; set; }
+
+        #endregion Public Properties
     }
 }

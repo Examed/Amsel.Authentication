@@ -8,6 +8,8 @@ namespace Amsel.Enums.Authentication.EnumStrings
 {
     public static class TwitchScopeHelper
     {
+        #region Public Methods
+
         public static ETwitchScope GetScopes([NotNull] this IList<string> scopeList)
         {
             if (scopeList == null) throw new ArgumentNullException(nameof(scopeList));
@@ -150,5 +152,7 @@ namespace Amsel.Enums.Authentication.EnumStrings
                 builder.Append("whispers:edit ");
             return builder.ToString().Trim();
         }
+
+        #endregion Public Methods
     }
 }
