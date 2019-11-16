@@ -6,9 +6,4 @@
   <ItemGroup>
     <PackageReference Include="JetBrains.Annotations" Version="2019.1.3" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Amsel.Enums.Authentication">
-      <HintPath>..\..\..\clients\web\Amsel.Clients.Web.Admin\bin\Debug\netcoreapp3.0\Amsel.Enums.Authentication.dll</HintPath>
-    </Reference>
-  </ItemGroup>
 </Project>
