@@ -14,9 +14,13 @@ namespace Amsel.Ingress.Authentication.Ingress
 {
     public class AccountIngress : GenericIngress
     {
+        #region STATICS, CONST and FIELDS
+
         [NotNull] private static readonly APIAddress AllAccountURL = new APIAddress(AuthEndpointResources.ENDPOINT,
                                                                                     AuthEndpointResources.ACCOUNT,
                                                                                     AccountControllerResources.GET_ALL);
+
+        #endregion
 
         #region  CONSTRUCTORS
 

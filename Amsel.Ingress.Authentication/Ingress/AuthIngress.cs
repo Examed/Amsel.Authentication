@@ -13,9 +13,13 @@ namespace Amsel.Ingress.Authentication.Ingress
 {
     public class AuthIngress : GenericIngress
     {
+        #region STATICS, CONST and FIELDS
+
         [NotNull] public static readonly APIAddress PublicKeyURL = new APIAddress(AuthEndpointResources.ENDPOINT,
                                                                                   AuthEndpointResources.KEY,
                                                                                   KeyControllerResources.PUBLIC_KEY);
+
+        #endregion
 
         #region  CONSTRUCTORS
 

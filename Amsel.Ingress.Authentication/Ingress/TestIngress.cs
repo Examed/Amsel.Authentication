@@ -9,8 +9,12 @@ namespace Amsel.Ingress.Authentication.Ingress
 {
     public class TestIngress : GenericIngress
     {
+        #region STATICS, CONST and FIELDS
+
         [NotNull] public static readonly APIAddress AnonymousURL = new APIAddress("auth", "/test", "/Anonymous");
         [NotNull] public static readonly APIAddress AuthorizedURL = new APIAddress("auth", "/test", "/Authorized");
+
+        #endregion
 
         #region  CONSTRUCTORS
 

@@ -10,17 +10,17 @@ namespace Amsel.DTO.Authentication.Models
         protected AuthTokenDTO() { }
 
         public AuthTokenDTO(string token, DateTime expireTime) {
-            Token             = token;
-            RefreshToken      = null;
-            ExpireTime        = expireTime;
+            Token = token;
+            RefreshToken = null;
+            ExpireTime = expireTime;
             RefreshExpireTime = expireTime;
         }
 
         [JsonConstructor]
         public AuthTokenDTO(string token, string refreshToken, DateTime expireTime, DateTime refreshExpireTime) {
-            Token             = token;
-            RefreshToken      = refreshToken;
-            ExpireTime        = expireTime;
+            Token = token;
+            RefreshToken = refreshToken;
+            ExpireTime = expireTime;
             RefreshExpireTime = refreshExpireTime;
         }
 

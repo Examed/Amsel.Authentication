@@ -8,7 +8,7 @@ namespace Amsel.DTO.Authentication.Models
 
         public TwitchTokenDTO(string accessToken, ETwitchScope scope) {
             AccessToken = accessToken;
-            Scope       = scope;
+            Scope = scope;
         }
 
         #endregion

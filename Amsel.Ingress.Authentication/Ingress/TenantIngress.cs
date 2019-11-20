@@ -15,6 +15,8 @@ namespace Amsel.Ingress.Authentication.Ingress
 {
     public class TenantIngress : GenericIngress
     {
+        #region STATICS, CONST and FIELDS
+
         [NotNull] private static readonly APIAddress AllTenantsURL = new APIAddress(AuthEndpointResources.ENDPOINT,
                                                                                     AuthEndpointResources.TENANT,
                                                                                     TenantControllerResources.GET_ALL);
@@ -28,6 +30,8 @@ namespace Amsel.Ingress.Authentication.Ingress
                                                                                        AuthEndpointResources.TENANT,
                                                                                        TenantControllerResources
                                                                                            .GET_BY_ID);
+
+        #endregion
 
         #region  CONSTRUCTORS
 
@@ -51,13 +55,13 @@ namespace Amsel.Ingress.Authentication.Ingress
         [NotNull]
         public async Task<TenantDTO> GetTenantByNameAsync(string name) {
             KeyValuePair<string, string> nameValue = new KeyValuePair<string, string>("name", name);
-            HttpResponseMessage          response  = await GetAsync(TenantGetByNameURL, nameValue);
+            HttpResponseMessage response = await GetAsync(TenantGetByNameURL, nameValue);
             return await response.DeserializeElseThrowAsync<TenantDTO>();
         }
 
         public async Task<TenantDTO> GetTenantAsync(Guid id) {
-            KeyValuePair<string, string> idValue  = new KeyValuePair<string, string>("id", id.ToString());
-            HttpResponseMessage          response = await GetAsync(TenantGetByIdURL, idValue);
+            KeyValuePair<string, string> idValue = new KeyValuePair<string, string>("id", id.ToString());
+            HttpResponseMessage response = await GetAsync(TenantGetByIdURL, idValue);
             return await response.DeserializeElseThrowAsync<TenantDTO>();
         }
     }
