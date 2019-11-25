@@ -3,18 +3,6 @@ using Newtonsoft.Json;
 
 namespace Amsel.DTO.Authentication.Models
 {
-    public class AuthRefreshTokenDTO
-    {
-        public AuthRefreshTokenDTO(AuthTokenDTO token, AuthTokenDTO refresh)
-        {
-            Token = token ?? throw new ArgumentNullException(nameof(token));
-            Refresh = refresh ?? throw new ArgumentNullException(nameof(refresh));
-        }
-
-        public AuthTokenDTO Token { get; set; }
-        public AuthTokenDTO Refresh { get; set; }
-    }
-
     public class AuthTokenDTO
     {
         #region  CONSTRUCTORS
@@ -28,12 +16,9 @@ namespace Amsel.DTO.Authentication.Models
             ExpireTime = expireTime;
         }
 
-
         #endregion
 
         public DateTime ExpireTime { get; set; }
-
-
         public string Token { get; set; }
 
         public bool Expired()
