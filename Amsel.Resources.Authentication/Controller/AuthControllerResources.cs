@@ -8,10 +8,12 @@
         public const string SERVICE = "service";
         public const string TWITCH = "twitch";
         public const string LOGIN = "";
+        public const string SESSION = "session";
         public const string LOGOUT = "logout";
         // TODO
         public const string REVOKE_ = "revoke";
 
         #endregion
+
     }
 }
