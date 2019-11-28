@@ -13,20 +13,36 @@ using JetBrains.Annotations;
 
 namespace Amsel.Ingress.Authentication.Ingress
 {
-    public class TenantIngress : GenericIngress
+    public abstract class CRUDIngress<TEntity> : GenericIngress
+    {
+        [NotNull]
+        protected abstract APIAddress GetAllURL { get; }
+
+        [NotNull]
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        {
+            HttpResponseMessage response = await GetAsync(GetAllURL);
+            return await response.DeserializeOrDefaultAsync<IEnumerable<TEntity>>();
+        }
+    }
+
+    public class TenantIngress : CRUDIngress<TenantDTO>
     {
         #region STATICS, CONST and FIELDS
 
-        [NotNull] private static readonly APIAddress AllTenantsURL = new APIAddress(AuthEndpointResources.ENDPOINT,
+        [NotNull]
+        protected override APIAddress GetAllURL => new APIAddress(AuthEndpointResources.ENDPOINT,
                                                                                     AuthEndpointResources.TENANT,
                                                                                     TenantControllerResources.GET_ALL);
 
-        [NotNull] private static readonly APIAddress TenantGetByNameURL = new APIAddress(AuthEndpointResources.ENDPOINT,
+        [NotNull]
+        private static readonly APIAddress TenantGetByNameURL = new APIAddress(AuthEndpointResources.ENDPOINT,
                                                                                          AuthEndpointResources.TENANT,
                                                                                          TenantControllerResources
                                                                                              .GET_BY_NAME);
 
-        [NotNull] private static readonly APIAddress TenantGetByIdURL = new APIAddress(AuthEndpointResources.ENDPOINT,
+        [NotNull]
+        private static readonly APIAddress TenantGetByIdURL = new APIAddress(AuthEndpointResources.ENDPOINT,
                                                                                        AuthEndpointResources.TENANT,
                                                                                        TenantControllerResources
                                                                                            .GET_BY_ID);
@@ -39,27 +55,26 @@ namespace Amsel.Ingress.Authentication.Ingress
 
         #endregion
 
-        [NotNull]
-        public async Task<IEnumerable<TenantDTO>> GetAllAsync() {
-            HttpResponseMessage response = await GetAsync(AllTenantsURL);
-            return await response.DeserializeOrDefaultAsync<IEnumerable<TenantDTO>>();
-        }
+
 
 
         [CanBeNull]
-        public async Task<Guid?> GetIdByNameAsync(string name) {
+        public async Task<Guid?> GetIdByNameAsync(string name)
+        {
             TenantDTO tenant = await GetTenantByNameAsync(name);
             return tenant.Id;
         }
 
         [NotNull]
-        public async Task<TenantDTO> GetTenantByNameAsync(string name) {
+        public async Task<TenantDTO> GetTenantByNameAsync(string name)
+        {
             KeyValuePair<string, string> nameValue = new KeyValuePair<string, string>("name", name);
             HttpResponseMessage response = await GetAsync(TenantGetByNameURL, nameValue);
             return await response.DeserializeElseThrowAsync<TenantDTO>();
         }
 
-        public async Task<TenantDTO> GetTenantAsync(Guid id) {
+        public async Task<TenantDTO> GetTenantAsync(Guid id)
+        {
             KeyValuePair<string, string> idValue = new KeyValuePair<string, string>("id", id.ToString());
             HttpResponseMessage response = await GetAsync(TenantGetByIdURL, idValue);
             return await response.DeserializeElseThrowAsync<TenantDTO>();
