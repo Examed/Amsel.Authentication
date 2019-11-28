@@ -15,13 +15,22 @@ namespace Amsel.Ingress.Authentication.Ingress
 {
     public abstract class CRUDIngress<TEntity> : GenericIngress
     {
-        [NotNull]
-        protected abstract APIAddress GetAllURL { get; }
+        protected CRUDIngress(IAuthService authService) : base(authService)
+        {
+        }
 
         [NotNull]
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        protected abstract APIAddress GetURL { get; }
+
+
+        public IEnumerable<TEntity> GetAll(int? skip = null, int? take = null)
         {
-            HttpResponseMessage response = await GetAsync(GetAllURL);
+            return GetAllAsync(skip, take).Result;
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync(int? skip = null, int? take = null)
+        {
+            HttpResponseMessage response = await GetAsync(GetURL, skip, take);
             return await response.DeserializeOrDefaultAsync<IEnumerable<TEntity>>();
         }
     }
@@ -31,9 +40,9 @@ namespace Amsel.Ingress.Authentication.Ingress
         #region STATICS, CONST and FIELDS
 
         [NotNull]
-        protected override APIAddress GetAllURL => new APIAddress(AuthEndpointResources.ENDPOINT,
+        protected override APIAddress GetURL => new APIAddress(AuthEndpointResources.ENDPOINT,
                                                                                     AuthEndpointResources.TENANT,
-                                                                                    TenantControllerResources.GET_ALL);
+                                                                                    TenantControllerResources.GET_All);
 
         [NotNull]
         private static readonly APIAddress TenantGetByNameURL = new APIAddress(AuthEndpointResources.ENDPOINT,
