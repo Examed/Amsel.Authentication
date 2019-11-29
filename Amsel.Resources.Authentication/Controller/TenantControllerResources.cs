@@ -1,13 +1,21 @@
 ﻿namespace Amsel.Resources.Authentication.Controller
 {
+    public static class CRUDControllerResources
+    {
+        public const string READ = "crud/read";
+        public const string INSERT = "crud/insert";
+        public const string REMOVE = "crud/remove";
+        public const string UPDATE = "crud/update";
+    }
+
     public static class TenantControllerResources
     {
         #region STATICS, CONST and FIELDS
 
         public const string GET_BY_ID = "get/{id}";
         public const string CREATE = "create/{name}";
-        public const string GET_All = "all";
         public const string GET_BY_NAME = "getByName/{name}";
+
 
         #endregion
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Amsel.DTO.Authentication.Models;
 using Amsel.Framework.Infrastruktur.Application.Interfaces;
@@ -10,6 +11,7 @@ using Amsel.Framework.Utilities.Extentions.Http;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 
 namespace Amsel.Ingress.Authentication.Ingress
 {
@@ -20,17 +22,68 @@ namespace Amsel.Ingress.Authentication.Ingress
         }
 
         [NotNull]
-        protected abstract APIAddress GetURL { get; }
+        protected abstract APIAddress ReadAddress { get; }
+        [NotNull]
+        protected abstract APIAddress InsertAddress { get; }
+        [NotNull]
+        protected abstract APIAddress UpdateAddress { get; }
+        [NotNull]
+        protected abstract APIAddress RemoveAddress { get; }
 
-
-        public IEnumerable<TEntity> GetAll(int? skip = null, int? take = null)
+        [NotNull]
+        public virtual TEntity Insert(TEntity data)
         {
-            return GetAllAsync(skip, take).Result;
+            return InsertAsync(data).Result;
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(int? skip = null, int? take = null)
+        [NotNull]
+        public virtual async Task<TEntity> InsertAsync(TEntity data)
         {
-            HttpResponseMessage response = await GetAsync(GetURL, skip, take);
+            var json = JsonConvert.SerializeObject(data);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await PostAsync(InsertAddress, content);
+            return await response.DeserializeElseThrowAsync<TEntity>();
+        }
+
+        [NotNull]
+        public virtual bool Remove(TEntity data)
+        {
+            return RemoveAsync(data).Result;
+        }
+
+        [NotNull]
+        public virtual async Task<bool> RemoveAsync(TEntity data)
+        {
+            var json = JsonConvert.SerializeObject(data);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await PostAsync(RemoveAddress, content);
+            return response.IsSuccessStatusCode;
+        }
+
+
+        [NotNull]
+        public virtual TEntity Update(TEntity data)
+        {
+            return UpdateAsync(data).Result;
+        }
+
+        [NotNull]
+        public virtual async Task<TEntity> UpdateAsync(TEntity data)
+        {
+            var json = JsonConvert.SerializeObject(data);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = await PutAsync(UpdateAddress, content);
+            return await response.DeserializeOrDefaultAsync<TEntity>();
+        }
+     
+        public virtual IEnumerable<TEntity> Read(int? skip = null, int? take = null)
+        {
+            return ReadAsync(skip, take).Result;
+        }
+
+        public virtual async Task<IEnumerable<TEntity>> ReadAsync(int? skip = null, int? take = null)
+        {
+            HttpResponseMessage response = await GetAsync(ReadAddress, skip, take);
             return await response.DeserializeOrDefaultAsync<IEnumerable<TEntity>>();
         }
     }
@@ -39,22 +92,22 @@ namespace Amsel.Ingress.Authentication.Ingress
     {
         #region STATICS, CONST and FIELDS
 
-        [NotNull]
-        protected override APIAddress GetURL => new APIAddress(AuthEndpointResources.ENDPOINT,
-                                                                                    AuthEndpointResources.TENANT,
-                                                                                    TenantControllerResources.GET_All);
+        protected override APIAddress ReadAddress
+            => new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.TENANT, CRUDControllerResources.READ);
+        protected override APIAddress InsertAddress
+            => new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.TENANT, CRUDControllerResources.INSERT);
+        protected override APIAddress UpdateAddress
+            => new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.TENANT, CRUDControllerResources.UPDATE);
+        protected override APIAddress RemoveAddress
+            => new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.TENANT, CRUDControllerResources.REMOVE);
 
         [NotNull]
-        private static readonly APIAddress TenantGetByNameURL = new APIAddress(AuthEndpointResources.ENDPOINT,
-                                                                                         AuthEndpointResources.TENANT,
-                                                                                         TenantControllerResources
-                                                                                             .GET_BY_NAME);
+        private static readonly APIAddress TenantGetByNameURL
+            = new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.TENANT, TenantControllerResources.GET_BY_NAME);
 
         [NotNull]
-        private static readonly APIAddress TenantGetByIdURL = new APIAddress(AuthEndpointResources.ENDPOINT,
-                                                                                       AuthEndpointResources.TENANT,
-                                                                                       TenantControllerResources
-                                                                                           .GET_BY_ID);
+        private static readonly APIAddress TenantGetByIdURL
+            = new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.TENANT, TenantControllerResources.GET_BY_ID);
 
         #endregion
 
