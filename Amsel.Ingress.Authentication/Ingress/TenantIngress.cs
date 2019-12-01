@@ -72,10 +72,10 @@ namespace Amsel.Ingress.Authentication.Ingress
         {
             var json = JsonConvert.SerializeObject(data);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await PutAsync(UpdateAddress, content);
+            HttpResponseMessage response = await PostAsync(UpdateAddress, content).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<TEntity>();
         }
-     
+
         public virtual IEnumerable<TEntity> Read(int? skip = null, int? take = null)
         {
             return ReadAsync(skip, take).Result;
