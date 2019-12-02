@@ -16,9 +16,7 @@ namespace Amsel.Ingress.Authentication.Ingress
     {
         #region STATICS, CONST and FIELDS
 
-        [NotNull] private static readonly APIAddress AllAccountURL = new APIAddress(AuthEndpointResources.ENDPOINT,
-                                                                                    AuthEndpointResources.ACCOUNT,
-                                                                                    AccountControllerResources.GET_ALL);
+        [NotNull] private static readonly APIAddress AllAccountURL = new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.ACCOUNT, AccountControllerResources.GET_ALL);
 
         #endregion
 
@@ -30,8 +28,8 @@ namespace Amsel.Ingress.Authentication.Ingress
 
         [NotNull]
         public async Task<IEnumerable<AccountDTO>> GetAllAsync() {
-            HttpResponseMessage response = await GetAsync(AllAccountURL);
-            return await response.DeserializeOrDefaultAsync<IEnumerable<AccountDTO>>();
+            HttpResponseMessage response = await GetAsync(AllAccountURL).ConfigureAwait(false);
+            return await response.DeserializeOrDefaultAsync<IEnumerable<AccountDTO>>().ConfigureAwait(false);
         }
     }
 }

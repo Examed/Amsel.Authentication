@@ -1,4 +1,4 @@
-﻿namespace Amsel.Resources.Authentication.Cookie
+﻿namespace Amsel.Resources.Authentication
 {
     public static class AuthSessionResources
     {

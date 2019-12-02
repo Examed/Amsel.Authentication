@@ -9,6 +9,16 @@ namespace Amsel.Ingress.Authentication.Ingress
 {
     public class TestIngress : GenericIngress
     {
+        public async Task<string> GetAnonymousTestAsync() {
+            HttpResponseMessage response = await GetAsync(AnonymousURL).ConfigureAwait(false);
+            return await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
+        }
+
+        public async Task<string> GetAuthorizedTestAsync() {
+            HttpResponseMessage response = await GetAsync(AuthorizedURL).ConfigureAwait(false);
+            return await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
+        }
+
         #region STATICS, CONST and FIELDS
 
         [NotNull] public static readonly APIAddress AnonymousURL = new APIAddress("auth", "/test", "/Anonymous");
@@ -23,15 +33,5 @@ namespace Amsel.Ingress.Authentication.Ingress
         public TestIngress(IAuthService authenticationService) : base(authenticationService) { }
 
         #endregion
-
-        public async Task<string> GetAnonymousTest() {
-            HttpResponseMessage response = await GetAsync(AnonymousURL);
-            return await response?.Content?.ReadAsStringAsync();
-        }
-
-        public async Task<string> GetAuthorizedTest() {
-            HttpResponseMessage response = await GetAsync(AuthorizedURL);
-            return await response?.Content?.ReadAsStringAsync();
-        }
     }
 }

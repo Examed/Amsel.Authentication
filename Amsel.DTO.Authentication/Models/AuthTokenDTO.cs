@@ -5,24 +5,10 @@ namespace Amsel.DTO.Authentication.Models
 {
     public class AuthTokenDTO
     {
-        #region  CONSTRUCTORS
-
-        protected AuthTokenDTO() { }
-
-        [JsonConstructor]
-        public AuthTokenDTO(string token, DateTime expireTime)
-        {
-            Token = token;
-            ExpireTime = expireTime;
-        }
-
-        #endregion
-
         public DateTime ExpireTime { get; set; }
         public string Token { get; set; }
 
-        public bool Expired()
-        {
+        public bool Expired() {
             if (string.IsNullOrEmpty(Token))
                 return true;
 
@@ -32,9 +18,18 @@ namespace Amsel.DTO.Authentication.Models
             return ExpireTime < DateTime.UtcNow;
         }
 
-        public bool HasToken()
-        {
-            return Token != null && !Expired();
+        public bool HasToken() { return Token != null && !Expired(); }
+
+        #region  CONSTRUCTORS
+
+        protected AuthTokenDTO() { }
+
+        [JsonConstructor]
+        public AuthTokenDTO(string token, DateTime expireTime) {
+            Token = token;
+            ExpireTime = expireTime;
         }
+
+        #endregion
     }
 }

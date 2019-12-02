@@ -15,11 +15,22 @@ namespace Amsel.Ingress.Authentication.Ingress
     {
         #region STATICS, CONST and FIELDS
 
-        [NotNull] public static readonly APIAddress PublicKeyURL = new APIAddress(AuthEndpointResources.ENDPOINT,
-                                                                                  AuthEndpointResources.KEY,
-                                                                                  KeyControllerResources.PUBLIC_KEY);
+        [NotNull] public static readonly APIAddress PublicKeyURL = new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.KEY, KeyControllerResources.PUBLIC_KEY);
 
         #endregion
+
+        [NotNull]
+        public async Task<RSACryptoServiceProvider> GetPublicKeyAsync() {
+            string content = await GetPublicKeyStringAsync().ConfigureAwait(false);
+            return RSACryptoKeyHelper.PublicKeyFromString(content);
+        }
+
+        [NotNull]
+        private async Task<string> GetPublicKeyStringAsync() {
+            HttpResponseMessage response = await GetAsync(PublicKeyURL).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
+            return await (response.Content?.ReadAsStringAsync()).ConfigureAwait(false);
+        }
 
         #region  CONSTRUCTORS
 
@@ -28,18 +39,5 @@ namespace Amsel.Ingress.Authentication.Ingress
         public AuthIngress(IAuthService authenticationService) : base(authenticationService) { }
 
         #endregion
-
-        [NotNull]
-        public async Task<RSACryptoServiceProvider> GetPublicKeyAsync() {
-            string content = await GetPublicKeyStringAsync();
-            return RSACryptoKeyHelper.PublicKeyFromString(content);
-        }
-
-        [NotNull]
-        private async Task<string> GetPublicKeyStringAsync() {
-            HttpResponseMessage response = await GetAsync(PublicKeyURL);
-            response.EnsureSuccessStatusCode();
-            return await response?.Content?.ReadAsStringAsync();
-        }
     }
 }
