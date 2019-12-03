@@ -30,13 +30,13 @@ namespace Amsel.Ingress.Authentication.Ingress
         [NotNull]
         public async Task<TenantDTO> GetTenantByNameAsync(string name) {
             KeyValuePair<string, string> nameValue = new KeyValuePair<string, string>("name", name);
-            HttpResponseMessage response = await GetAsync(TenantGetByNameURL, nameValue).ConfigureAwait(false);
+            HttpResponseMessage response = await GetAsync(TenantGet, nameValue).ConfigureAwait(false);
             return await response.DeserializeElseThrowAsync<TenantDTO>().ConfigureAwait(false);
         }
 
         public async Task<TenantDTO> GetTenantAsync(Guid id) {
             KeyValuePair<string, string> idValue = new KeyValuePair<string, string>("id", id.ToString());
-            HttpResponseMessage response = await GetAsync(TenantGetByIdURL, idValue).ConfigureAwait(false);
+            HttpResponseMessage response = await GetAsync(TenantGet, idValue).ConfigureAwait(false);
             return await response.DeserializeElseThrowAsync<TenantDTO>().ConfigureAwait(false);
         }
 
@@ -51,10 +51,7 @@ namespace Amsel.Ingress.Authentication.Ingress
         protected override APIAddress RemoveAddress => new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.TENANT, CRUDControllerResources.REMOVE);
 
         [NotNull]
-        private static readonly APIAddress TenantGetByNameURL = new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.TENANT, TenantControllerResources.GET_BY_NAME);
-
-        [NotNull]
-        private static readonly APIAddress TenantGetByIdURL = new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.TENANT, TenantControllerResources.GET_BY_ID);
+        private static readonly APIAddress TenantGet = new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.TENANT, TenantControllerResources.GET);
 
         #endregion
     }

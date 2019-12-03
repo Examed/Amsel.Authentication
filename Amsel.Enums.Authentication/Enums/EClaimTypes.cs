@@ -6,6 +6,7 @@
         TWITCH_TOKEN,
         TENANT_BANNED,
         TENANT_MODERATOR,
-        TENANT_EDITOR
+        TENANT_EDITOR,
+        PAYMENT_LEVEL,
     }
 }

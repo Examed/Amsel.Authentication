@@ -9,6 +9,7 @@
         public const string GET_REFRESHTOKEN = "Error while fetching the RefreshToken";
         public const string START_SESSION_FROM_SESSION = "Its not possible to start a Session from a SessionToken";
         public const string TWITCH_AUTHURL = "Error while generating AuthURL";
+        public const string BANNED = "The Account is Banned from the System";
 
         #endregion
     }
