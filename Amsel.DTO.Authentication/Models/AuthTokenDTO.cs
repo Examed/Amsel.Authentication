@@ -18,8 +18,6 @@ namespace Amsel.DTO.Authentication.Models
             return ExpireTime < DateTime.UtcNow;
         }
 
-        public bool HasToken() { return Token != null && !Expired(); }
-
         #region  CONSTRUCTORS
 
         protected AuthTokenDTO() { }
