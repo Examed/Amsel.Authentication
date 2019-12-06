@@ -19,7 +19,7 @@ namespace Amsel.Ingress.Authentication.Ingress
 
         #endregion
         [NotNull]
-        private static HttpClient client = new HttpClient();
+        private static readonly HttpClient Client = new HttpClient();
         [NotNull]
         public static async Task<RSACryptoServiceProvider> GetPublicKeyAsync()
         {
@@ -30,7 +30,7 @@ namespace Amsel.Ingress.Authentication.Ingress
         [NotNull]
         private static async Task<string> GetPublicKeyStringAsync()
         {
-            HttpResponseMessage response = await client.GetAsync(PublicKeyURL.GetURL()).ConfigureAwait(false);
+            HttpResponseMessage response = await Client.GetAsync(PublicKeyURL.GetURL()).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             return await (response.Content?.ReadAsStringAsync()).ConfigureAwait(false);
         }
