@@ -7,6 +7,6 @@
         TENANT_BANNED,
         TENANT_MODERATOR,
         TENANT_EDITOR,
-        SUBSCRIPTION_LEVEL,
+        SUBSCRIPTION_LEVEL
     }
 }
