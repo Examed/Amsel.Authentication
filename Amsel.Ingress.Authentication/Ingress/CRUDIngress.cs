@@ -2,9 +2,10 @@
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Amsel.Framework.Infrastruktur.Application.Interfaces;
-using Amsel.Framework.Infrastruktur.Application.Models.Address;
-using Amsel.Framework.Infrastruktur.Application.Service;
+using Amsel.Framework.Structure.Ingress.Models;
+using Amsel.Framework.Structure.Interfaces;
+using Amsel.Framework.Structure.Models.Address;
+using Amsel.Framework.Structure.Service;
 using Amsel.Framework.Utilities.Extentions.Http;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
@@ -31,7 +32,8 @@ namespace Amsel.Ingress.Authentication.Ingress
         public virtual TEntity Insert(TEntity data) { return InsertAsync(data).Result; }
 
         [NotNull]
-        public virtual async Task<TEntity> InsertAsync(TEntity data) {
+        public virtual async Task<TEntity> InsertAsync(TEntity data)
+        {
             string json = JsonConvert.SerializeObject(data);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await PostAsync(InsertAddress, content).ConfigureAwait(false);
@@ -41,7 +43,8 @@ namespace Amsel.Ingress.Authentication.Ingress
         public virtual bool Remove(TEntity data) { return RemoveAsync(data).Result; }
 
         [NotNull]
-        public virtual async Task<bool> RemoveAsync(TEntity data) {
+        public virtual async Task<bool> RemoveAsync(TEntity data)
+        {
             string json = JsonConvert.SerializeObject(data);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await PostAsync(RemoveAddress, content).ConfigureAwait(false);
@@ -51,20 +54,29 @@ namespace Amsel.Ingress.Authentication.Ingress
         public virtual TEntity Update(TEntity data) { return UpdateAsync(data).Result; }
 
         [NotNull]
-        public virtual async Task<TEntity> UpdateAsync(TEntity data) {
+        public virtual async Task<TEntity> UpdateAsync(TEntity data)
+        {
             string json = JsonConvert.SerializeObject(data);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await PostAsync(UpdateAddress, content).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
-        public virtual IEnumerable<TEntity> Read(int? skip = null, int? take = null) { return ReadAsync(skip, take).Result; }
+        public virtual (IEnumerable<TEntity> value, int count) Read(IEnumerable<SearchDTO>? filter = null, IEnumerable<OrderByDTO>? sort = null, int? skip = null, int? take = null)
+        {
+            return ReadAsync(filter, sort, skip, take).Result;
+        }
 
-        public virtual async Task<IEnumerable<TEntity>> ReadAsync(int? skip = null, int? take = null) {
-            KeyValuePair<string, string>[] parameters = {new KeyValuePair<string, string>(nameof(skip), skip.ToString()), new KeyValuePair<string, string>(nameof(take), take.ToString())};
+        public virtual async Task<(IEnumerable<TEntity> value, int count)> ReadAsync(IEnumerable<SearchDTO>? filter = null, IEnumerable<OrderByDTO>? orderBy = null, int? skip = null, int? take = null)
+        {
+            KeyValuePair<string, string>[] parameters = {
+                new KeyValuePair<string, string>(nameof(filter), JsonConvert.SerializeObject(filter)),
+                new KeyValuePair<string, string>(nameof(orderBy), JsonConvert.SerializeObject(orderBy)),
+                new KeyValuePair<string, string>(nameof(skip), skip.ToString()),
+                new KeyValuePair<string, string>(nameof(take), take.ToString()) };
 
             HttpResponseMessage response = await GetAsync(ReadAddress, parameters).ConfigureAwait(false);
-            return await response.DeserializeOrDefaultAsync<IEnumerable<TEntity>>().ConfigureAwait(false);
+            return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int count)>().ConfigureAwait(false);
         }
     }
 }

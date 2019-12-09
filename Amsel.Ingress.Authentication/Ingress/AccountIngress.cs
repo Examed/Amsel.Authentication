@@ -2,9 +2,9 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Amsel.DTO.Authentication.Models;
-using Amsel.Framework.Infrastruktur.Application.Interfaces;
-using Amsel.Framework.Infrastruktur.Application.Models.Address;
-using Amsel.Framework.Infrastruktur.Application.Service;
+using Amsel.Framework.Structure.Interfaces;
+using Amsel.Framework.Structure.Models.Address;
+using Amsel.Framework.Structure.Service;
 using Amsel.Framework.Utilities.Extentions.Http;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;

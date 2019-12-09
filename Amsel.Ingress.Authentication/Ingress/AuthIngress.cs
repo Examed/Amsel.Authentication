@@ -1,5 +1,5 @@
-﻿using Amsel.Framework.Infrastruktur.Application.Interfaces;
-using Amsel.Framework.Infrastruktur.Application.Service;
+﻿using Amsel.Framework.Structure.Interfaces;
+using Amsel.Framework.Structure.Service;
 
 namespace Amsel.Ingress.Authentication.Ingress
 {

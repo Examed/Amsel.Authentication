@@ -1,8 +1,8 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
-using Amsel.Framework.Infrastruktur.Application.Interfaces;
-using Amsel.Framework.Infrastruktur.Application.Models.Address;
-using Amsel.Framework.Infrastruktur.Application.Service;
+using Amsel.Framework.Structure.Interfaces;
+using Amsel.Framework.Structure.Models.Address;
+using Amsel.Framework.Structure.Service;
 using JetBrains.Annotations;
 
 namespace Amsel.Ingress.Authentication.Ingress
