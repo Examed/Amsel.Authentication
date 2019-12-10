@@ -10,8 +10,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\frameworks\Amsel.Framework.Structure\Amsel.Framework.Structure.Ingress\Amsel.Framework.Structure.Ingress.csproj" />
-    <ProjectReference Include="..\..\..\frameworks\Amsel.Framework.Structure\Amsel.Framework.Structure\Amsel.Framework.Structure.csproj" />
+    <ProjectReference Include="..\..\..\Amsel.Framework\Amsel.Framework.Structure\Amsel.Framework.Structure.Ingress\Amsel.Framework.Structure.Ingress.csproj" />
+    <ProjectReference Include="..\..\..\Amsel.Framework\Amsel.Framework.Structure\Amsel.Framework.Structure\Amsel.Framework.Structure.csproj" />
     <ProjectReference Include="..\Amsel.DTO.Authentication\Amsel.DTO.Authentication.csproj" />
     <ProjectReference Include="..\Amsel.Resources.Authentication\Amsel.Resources.Authentication.csproj" />
   </ItemGroup>
