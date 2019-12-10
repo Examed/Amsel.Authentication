@@ -43,7 +43,7 @@ namespace Amsel.Ingress.Authentication.Ingress
         public virtual bool Remove(TEntity data) { return RemoveAsync(data).Result; }
 
         [NotNull]
-        public virtual async Task<bool> RemoveAsync(TEntity data)
+        public virtual async Task<bool> RemoveAsync(object data)
         {
             string json = JsonConvert.SerializeObject(data);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
