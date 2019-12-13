@@ -29,13 +29,13 @@ namespace Amsel.Ingress.Authentication.Ingress
 
         [NotNull]
         public async Task<TenantDTO> GetTenantByNameAsync(string name) {
-            KeyValuePair<string, string> nameValue = new KeyValuePair<string, string>("name", name);
+            KeyValuePair<string, object> nameValue = new KeyValuePair<string, object>("name", name);
             HttpResponseMessage response = await GetAsync(TenantGet, nameValue).ConfigureAwait(false);
             return await response.DeserializeElseThrowAsync<TenantDTO>().ConfigureAwait(false);
         }
 
         public async Task<TenantDTO> GetTenantAsync(Guid id) {
-            KeyValuePair<string, string> idValue = new KeyValuePair<string, string>("id", id.ToString());
+            KeyValuePair<string, object> idValue = new KeyValuePair<string, object>("id", id.ToString());
             HttpResponseMessage response = await GetAsync(TenantGet, idValue).ConfigureAwait(false);
             return await response.DeserializeElseThrowAsync<TenantDTO>().ConfigureAwait(false);
         }

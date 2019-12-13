@@ -7,6 +7,7 @@ using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Structure.Service;
 using Amsel.Framework.Utilities.Extentions.Http;
+using Amsel.Framework.Utilities.Extentions.Types;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
 
@@ -62,18 +63,22 @@ namespace Amsel.Ingress.Authentication.Ingress
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
-        public virtual (IEnumerable<TEntity> value, int count) Read(IEnumerable<SearchDTO>? filter = null, IEnumerable<OrderByDTO>? sort = null, int? skip = null, int? take = null)
+        public virtual (IEnumerable<TEntity> value, int count) Read(IEnumerable<WhereDTO>? filter = null, IEnumerable<OrderByDTO>? sort = null, int? skip = null, int? take = null)
         {
             return ReadAsync(filter, sort, skip, take).Result;
         }
 
-        public virtual async Task<(IEnumerable<TEntity> value, int count)> ReadAsync(IEnumerable<SearchDTO>? filter = null, IEnumerable<OrderByDTO>? orderBy = null, int? skip = null, int? take = null)
+        public virtual async Task<(IEnumerable<TEntity> value, int count)> ReadAsync(IEnumerable<WhereDTO>? filter = null, IEnumerable<OrderByDTO>? orderBy = null, int? skip = null, int? take = null)
         {
-            KeyValuePair<string, string>[] parameters = {
-                new KeyValuePair<string, string>(nameof(filter), JsonConvert.SerializeObject(filter)),
-                new KeyValuePair<string, string>(nameof(orderBy), JsonConvert.SerializeObject(orderBy)),
-                new KeyValuePair<string, string>(nameof(skip), skip.ToString()),
-                new KeyValuePair<string, string>(nameof(take), take.ToString()) };
+            Dictionary<string, object> parameters = new Dictionary<string, object>
+            {
+                {nameof(skip), skip.ToString()},
+                {nameof(take), take.ToString()}
+            };
+            if (!filter.IsNullOrEmpty())
+                parameters.Add(nameof(filter), JsonConvert.SerializeObject(filter));
+            if (!orderBy.IsNullOrEmpty())
+                parameters.Add(nameof(orderBy), JsonConvert.SerializeObject(orderBy));
 
             HttpResponseMessage response = await GetAsync(ReadAddress, parameters).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int count)>().ConfigureAwait(false);
