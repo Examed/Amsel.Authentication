@@ -63,20 +63,20 @@ namespace Amsel.Ingress.Authentication.Ingress
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
-        public virtual (IEnumerable<TEntity> value, int count) Read(IEnumerable<WhereDTO>? filter = null, IEnumerable<OrderByDTO>? sort = null, int? skip = null, int? take = null)
+        public virtual (IEnumerable<TEntity> value, int count) Read(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? sort = null, int? skip = null, int? take = null)
         {
-            return ReadAsync(filter, sort, skip, take).Result;
+            return ReadAsync(jsonLogicFilter, sort, skip, take).Result;
         }
 
-        public virtual async Task<(IEnumerable<TEntity> value, int count)> ReadAsync(IEnumerable<WhereDTO>? filter = null, IEnumerable<OrderByDTO>? orderBy = null, int? skip = null, int? take = null)
+        public virtual async Task<(IEnumerable<TEntity> value, int count)> ReadAsync(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? orderBy = null, int? skip = null, int? take = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
                 {nameof(skip), skip.ToString()},
                 {nameof(take), take.ToString()}
             };
-            if (!filter.IsNullOrEmpty())
-                parameters.Add(nameof(filter), JsonConvert.SerializeObject(filter));
+            if (!jsonLogicFilter.IsNullOrEmpty())
+                parameters.Add(nameof(jsonLogicFilter), JsonConvert.SerializeObject(jsonLogicFilter));
             if (!orderBy.IsNullOrEmpty())
                 parameters.Add(nameof(orderBy), JsonConvert.SerializeObject(orderBy));
 
