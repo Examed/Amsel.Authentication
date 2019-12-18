@@ -63,12 +63,12 @@ namespace Amsel.Ingress.Authentication.Ingress
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
-        public virtual (IEnumerable<TEntity> value, int count) Read(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? sort = null, int? skip = null, int? take = null)
+        public virtual (IEnumerable<TEntity> value, long? count) Read(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? sort = null, int? skip = null, int? take = null)
         {
             return ReadAsync(jsonLogicFilter, sort, skip, take).Result;
         }
 
-        public virtual async Task<(IEnumerable<TEntity> value, int count)> ReadAsync(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? orderBy = null, int? skip = null, int? take = null)
+        public virtual async Task<(IEnumerable<TEntity> value, long? count)> ReadAsync(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? orderBy = null, int? skip = null, int? take = null)
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>
             {
@@ -81,7 +81,7 @@ namespace Amsel.Ingress.Authentication.Ingress
                 parameters.Add(nameof(orderBy), JsonConvert.SerializeObject(orderBy));
 
             HttpResponseMessage response = await GetAsync(ReadAddress, parameters).ConfigureAwait(false);
-            return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int count)>().ConfigureAwait(false);
+            return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, long? count)>().ConfigureAwait(false);
         }
     }
 }
