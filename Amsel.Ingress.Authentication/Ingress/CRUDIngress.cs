@@ -33,8 +33,7 @@ namespace Amsel.Ingress.Authentication.Ingress
         public virtual TEntity Insert(TEntity data) { return InsertAsync(data).Result; }
 
         [NotNull]
-        public virtual async Task<TEntity> InsertAsync(TEntity data)
-        {
+        public virtual async Task<TEntity> InsertAsync(TEntity data) {
             string json = JsonConvert.SerializeObject(data);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await PostAsync(InsertAddress, content).ConfigureAwait(false);
@@ -44,8 +43,7 @@ namespace Amsel.Ingress.Authentication.Ingress
         public virtual bool Remove(TEntity data) { return RemoveAsync(data).Result; }
 
         [NotNull]
-        public virtual async Task<bool> RemoveAsync(object data)
-        {
+        public virtual async Task<bool> RemoveAsync(object data) {
             string json = JsonConvert.SerializeObject(data);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await PostAsync(RemoveAddress, content).ConfigureAwait(false);
@@ -55,26 +53,19 @@ namespace Amsel.Ingress.Authentication.Ingress
         public virtual TEntity Update(TEntity data) { return UpdateAsync(data).Result; }
 
         [NotNull]
-        public virtual async Task<TEntity> UpdateAsync(TEntity data)
-        {
+        public virtual async Task<TEntity> UpdateAsync(TEntity data) {
             string json = JsonConvert.SerializeObject(data);
             StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
             HttpResponseMessage response = await PostAsync(UpdateAddress, content).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
-        public virtual (IEnumerable<TEntity> value, int? count) Read(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? sort = null, int? skip = null, int? take = null)
-        {
+        public virtual (IEnumerable<TEntity> value, int? count) Read(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? sort = null, int? skip = null, int? take = null) {
             return ReadAsync(jsonLogicFilter, sort, skip, take).Result;
         }
 
-        public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadAsync(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? orderBy = null, int? skip = null, int? take = null)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object>
-            {
-                {nameof(skip), skip.ToString()},
-                {nameof(take), take.ToString()}
-            };
+        public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadAsync(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? orderBy = null, int? skip = null, int? take = null) {
+            Dictionary<string, object> parameters = new Dictionary<string, object> {{nameof(skip), skip.ToString()}, {nameof(take), take.ToString()}};
             if (!jsonLogicFilter.IsNullOrEmpty())
                 parameters.Add(nameof(jsonLogicFilter), JsonConvert.SerializeObject(jsonLogicFilter));
             // if (!orderBy.IsNullOrEmpty())
