@@ -77,8 +77,8 @@ namespace Amsel.Ingress.Authentication.Ingress
             };
             if (!jsonLogicFilter.IsNullOrEmpty())
                 parameters.Add(nameof(jsonLogicFilter), JsonConvert.SerializeObject(jsonLogicFilter));
-            if (!orderBy.IsNullOrEmpty())
-                parameters.Add(nameof(orderBy), JsonConvert.SerializeObject(orderBy));
+            // if (!orderBy.IsNullOrEmpty())
+            //parameters.Add(nameof(orderBy), JsonConvert.SerializeObject(orderBy));
 
             HttpResponseMessage response = await GetAsync(ReadAddress, parameters).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int? count)>().ConfigureAwait(false);
