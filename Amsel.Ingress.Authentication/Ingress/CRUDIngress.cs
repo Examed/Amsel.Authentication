@@ -34,9 +34,7 @@ namespace Amsel.Ingress.Authentication.Ingress
 
         [NotNull]
         public virtual async Task<TEntity> InsertAsync(TEntity data) {
-            string json = JsonConvert.SerializeObject(data);
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await PostAsync(InsertAddress, content).ConfigureAwait(false);
+            HttpResponseMessage response = await PostAsync(InsertAddress, GetJsonContent(data)).ConfigureAwait(false);
             return await response.DeserializeElseThrowAsync<TEntity>().ConfigureAwait(false);
         }
 
@@ -44,9 +42,7 @@ namespace Amsel.Ingress.Authentication.Ingress
 
         [NotNull]
         public virtual async Task<bool> RemoveAsync(object data) {
-            string json = JsonConvert.SerializeObject(data);
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await PostAsync(RemoveAddress, content).ConfigureAwait(false);
+            HttpResponseMessage response = await PostAsync(RemoveAddress, GetJsonContent(data)).ConfigureAwait(false);
             return response.IsSuccessStatusCode;
         }
 
@@ -54,9 +50,7 @@ namespace Amsel.Ingress.Authentication.Ingress
 
         [NotNull]
         public virtual async Task<TEntity> UpdateAsync(TEntity data) {
-            string json = JsonConvert.SerializeObject(data);
-            StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await PostAsync(UpdateAddress, content).ConfigureAwait(false);
+            HttpResponseMessage response = await PostAsync(UpdateAddress, GetJsonContent(data)).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
