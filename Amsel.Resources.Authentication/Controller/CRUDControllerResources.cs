@@ -1,5 +1,6 @@
 ﻿namespace Amsel.Resources.Authentication.Controller
 {
+    // TODO move to seperated Project
     public static class CRUDControllerResources
     {      
         public const string GET_BY_ID = "{id}";

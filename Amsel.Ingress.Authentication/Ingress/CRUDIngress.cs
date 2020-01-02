@@ -11,9 +11,11 @@ using Amsel.Framework.Utilities.Extentions.Types;
 using Amsel.Resources.Authentication.Controller;
 using JetBrains.Annotations;
 using Newtonsoft.Json;
+using Syncfusion.EJ2.Blazor;
 
 namespace Amsel.Ingress.Authentication.Ingress
 {
+    // TODO seperated Project
     public abstract class CRUDIngress<TEntity> : GenericIngress
     {
         protected CRUDIngress(IAuthService authService) : base(authService) { }
@@ -36,7 +38,6 @@ namespace Amsel.Ingress.Authentication.Ingress
         protected virtual APIAddress GetByIdAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.GET_BY_ID);
 
 
-        public virtual TEntity Insert(TEntity data) { return InsertAsync(data).Result; }
 
         [NotNull]
         public virtual async Task<TEntity> InsertAsync(TEntity data)
@@ -45,7 +46,6 @@ namespace Amsel.Ingress.Authentication.Ingress
             return await response.DeserializeElseThrowAsync<TEntity>().ConfigureAwait(false);
         }
 
-        public virtual bool Remove(TEntity data) { return RemoveAsync(data).Result; }
 
         [NotNull]
         public virtual async Task<bool> RemoveAsync(object data)
@@ -54,7 +54,6 @@ namespace Amsel.Ingress.Authentication.Ingress
             return response.IsSuccessStatusCode;
         }
 
-        public virtual TEntity GetById(object id) { return GetByIdAsync(id).Result; }
 
         [NotNull]
         public virtual async Task<TEntity> GetByIdAsync(object id)
@@ -63,7 +62,6 @@ namespace Amsel.Ingress.Authentication.Ingress
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
-        public virtual TEntity Update(TEntity data) { return UpdateAsync(data).Result; }
 
         [NotNull]
         public virtual async Task<TEntity> UpdateAsync(TEntity data)
@@ -72,20 +70,20 @@ namespace Amsel.Ingress.Authentication.Ingress
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
-        public virtual (IEnumerable<TEntity> value, int? count) Read(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? sort = null, int? skip = null, int? take = null)
-        {
-            return ReadAsync(jsonLogicFilter, sort, skip, take).Result;
-        }
 
-        public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadAsync(string jsonLogicFilter = null, IEnumerable<OrderByDTO>? orderBy = null, int? skip = null, int? take = null)
-        {
-            Dictionary<string, object> parameters = new Dictionary<string, object> { { nameof(skip), skip.ToString() }, { nameof(take), take.ToString() } };
-            if (!jsonLogicFilter.IsNullOrEmpty())
-                parameters.Add(nameof(jsonLogicFilter), JsonConvert.SerializeObject(jsonLogicFilter));
-            // if (!orderBy.IsNullOrEmpty())
-            //parameters.Add(nameof(orderBy), JsonConvert.SerializeObject(orderBy));
+        //public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadAsync(string jsonLogicFilter = null, int? skip = null, int? take = null)
+        //{
+        //    Dictionary<string, object> parameters = new Dictionary<string, object> { { nameof(skip), skip.ToString() }, { nameof(take), take.ToString() } };
+        //    if (!jsonLogicFilter.IsNullOrEmpty())
+        //        parameters.Add(nameof(jsonLogicFilter), JsonConvert.SerializeObject(jsonLogicFilter));
 
-            HttpResponseMessage response = await GetAsync(ReadAddress, parameters).ConfigureAwait(false);
+        //    HttpResponseMessage response = await GetAsync(ReadAddress, parameters).ConfigureAwait(false);
+        //    return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int? count)>().ConfigureAwait(false);
+        //}
+
+        public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadAsync([NotNull] DataManagerRequest dm)
+        {
+            HttpResponseMessage response = await PostAsync(ReadAddress, GetJsonContent(dm)).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int? count)>().ConfigureAwait(false);
         }
     }
