@@ -2,7 +2,7 @@
 {
     // TODO move to seperated Project
     public static class CRUDControllerResources
-    {      
+    {
         public const string GET_BY_ID = "{id}";
         public const string READ = "read";
         public const string INSERT = "insert";

@@ -1,4 +1,4 @@
-﻿namespace Amsel.Resources.Authentication
+﻿namespace Amsel.Resources.Authentication.Session
 {
     public static class AuthSessionResources
     {
