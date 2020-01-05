@@ -9,12 +9,12 @@ using Amsel.Resources.Authentication.Controller;
 using JetBrains.Annotations;
 using Syncfusion.EJ2.Blazor;
 
-namespace Amsel.Ingress.Authentication.Ingress
+namespace Amsel.Access.Authentication.Services
 {
     // TODO seperated Project
-    public abstract class CRUDIngress<TEntity> : GenericIngress
+    public abstract class CRUDAccess<TEntity> : GenericAccess
     {
-        protected CRUDIngress(IAuthService authService) : base(authService) { }
+        protected CRUDAccess(IAuthService authService) : base(authService) { }
 
 
         [NotNull]
@@ -47,7 +47,7 @@ namespace Amsel.Ingress.Authentication.Ingress
 
 
         [NotNull]
-        public virtual async Task<bool> RemoveAsync(object data) {
+        public virtual async Task<object> RemoveAsync(object data) {
             HttpResponseMessage response = await PostAsync(RemoveAddress, GetJsonContent(data)).ConfigureAwait(false);
             return response.IsSuccessStatusCode;
         }

@@ -10,13 +10,13 @@ using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
 using JetBrains.Annotations;
 
-namespace Amsel.Ingress.Authentication.Ingress
+namespace Amsel.Access.Authentication.Services
 {
-    public class TenantIngress : CRUDIngress<TenantDTO>
+    public class TenantAccess : CRUDAccess<TenantDTO>
     {
         #region  CONSTRUCTORS
 
-        public TenantIngress(IAuthService authenticationService) : base(authenticationService) { }
+        public TenantAccess(IAuthService authenticationService) : base(authenticationService) { }
 
         #endregion
 

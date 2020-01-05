@@ -7,9 +7,9 @@ using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
 using JetBrains.Annotations;
 
-namespace Amsel.Ingress.Authentication.Ingress
+namespace Amsel.Access.Authentication.Services
 {
-    public static class KeyIngress
+    public static class KeyAccess
     {
         #region STATICS, CONST and FIELDS
 

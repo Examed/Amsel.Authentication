@@ -10,9 +10,9 @@ using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
 using JetBrains.Annotations;
 
-namespace Amsel.Ingress.Authentication.Ingress
+namespace Amsel.Access.Authentication.Services
 {
-    public class AccountIngress : GenericIngress
+    public class AccountAccess : GenericAccess
     {
         #region STATICS, CONST and FIELDS
 
@@ -22,7 +22,7 @@ namespace Amsel.Ingress.Authentication.Ingress
 
         #region  CONSTRUCTORS
 
-        public AccountIngress(IAuthService authenticationService) : base(authenticationService) { }
+        public AccountAccess(IAuthService authenticationService) : base(authenticationService) { }
 
         #endregion
 

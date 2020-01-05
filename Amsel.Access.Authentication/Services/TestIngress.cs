@@ -5,9 +5,9 @@ using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Structure.Service;
 using JetBrains.Annotations;
 
-namespace Amsel.Ingress.Authentication.Ingress
+namespace Amsel.Access.Authentication.Services
 {
-    public class TestIngress : GenericIngress
+    public class TestAccess : GenericAccess
     {
         public async Task<string> GetAnonymousTestAsync() {
             HttpResponseMessage response = await GetAsync(AnonymousURL).ConfigureAwait(false);
@@ -28,9 +28,9 @@ namespace Amsel.Ingress.Authentication.Ingress
 
         #region  CONSTRUCTORS
 
-        public TestIngress() { }
+        public TestAccess() { }
 
-        public TestIngress(IAuthService authenticationService) : base(authenticationService) { }
+        public TestAccess(IAuthService authenticationService) : base(authenticationService) { }
 
         #endregion
     }
