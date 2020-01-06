@@ -55,7 +55,7 @@ namespace Amsel.Access.Authentication.Services
 
         [NotNull]
         public virtual async Task<TEntity> GetByIdAsync(object id) {
-            HttpResponseMessage response = await GetAsync(GetByIdAddress, new KeyValuePair<string, object>("id", id)).ConfigureAwait(false);
+            HttpResponseMessage response = await GetAsync(GetByIdAddress, new KeyValuePair<string, object>("id", id.ToString())).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
@@ -77,7 +77,7 @@ namespace Amsel.Access.Authentication.Services
         //    return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int? count)>().ConfigureAwait(false);
         //}
 
-        public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadAsync([NotNull] DataManagerRequest dm) {
+        public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadAsync(DataManagerRequest dm = null) {
             HttpResponseMessage response = await PostAsync(ReadAddress, GetJsonContent(dm)).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int? count)>().ConfigureAwait(false);
         }
