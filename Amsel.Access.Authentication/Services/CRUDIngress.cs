@@ -22,6 +22,8 @@ namespace Amsel.Access.Authentication.Services
 
         [NotNull]
         protected abstract string Resource { get; }
+        
+
 
         [NotNull]
         protected virtual APIAddress ReadAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.READ);
