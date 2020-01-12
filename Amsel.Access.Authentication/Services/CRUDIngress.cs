@@ -22,7 +22,6 @@ namespace Amsel.Access.Authentication.Services
 
         [NotNull]
         protected abstract string Resource { get; }
-        
 
 
         [NotNull]

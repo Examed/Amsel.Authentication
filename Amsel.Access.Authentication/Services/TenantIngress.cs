@@ -21,7 +21,6 @@ namespace Amsel.Access.Authentication.Services
         #endregion
 
 
-        
         public async Task<Guid?> GetIdByNameAsync(string name) {
             TenantDTO tenant = await GetTenantByNameAsync(name).ConfigureAwait(false);
             return tenant.Id;
