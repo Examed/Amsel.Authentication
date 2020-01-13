@@ -1,8 +1,8 @@
 ﻿using System.Net.Http;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using Amsel.Framework.Structure.Helper;
 using Amsel.Framework.Structure.Models.Address;
+using Amsel.Framework.Utilities.Helper;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
 using JetBrains.Annotations;

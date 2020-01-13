@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Amsel.DTO.Authentication.Models;
+using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Structure.Service;
@@ -22,7 +23,7 @@ namespace Amsel.Access.Authentication.Services
 
         #region  CONSTRUCTORS
 
-        public AccountAccess(IAuthService authenticationService) : base(authenticationService) { }
+        public AccountAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
         #endregion
 

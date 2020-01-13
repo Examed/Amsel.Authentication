@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Structure.Service;
@@ -14,7 +15,7 @@ namespace Amsel.Access.Authentication.Services
     // TODO seperated Project
     public abstract class CRUDAccess<TEntity> : GenericAccess
     {
-        protected CRUDAccess(IAuthService authService) : base(authService) { }
+        protected CRUDAccess(IAuthenticationService authService) : base(authService) { }
 
 
         [NotNull]

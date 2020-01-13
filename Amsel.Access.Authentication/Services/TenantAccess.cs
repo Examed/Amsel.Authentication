@@ -16,7 +16,7 @@ namespace Amsel.Access.Authentication.Services
     {
         #region  CONSTRUCTORS
 
-        public TenantAccess(IAuthService authenticationService) : base(authenticationService) { }
+        public TenantAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
         #endregion
 

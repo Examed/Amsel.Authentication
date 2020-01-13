@@ -1,4 +1,5 @@
-﻿using Amsel.Framework.Structure.Interfaces;
+﻿using Amsel.Framework.Structure.Client.Service;
+using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Service;
 
 namespace Amsel.Access.Authentication.Services
@@ -9,7 +10,7 @@ namespace Amsel.Access.Authentication.Services
 
         public AuthAccess() { }
 
-        public AuthAccess(IAuthService authenticationService) : base(authenticationService) { }
+        public AuthAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
         #endregion
     }
