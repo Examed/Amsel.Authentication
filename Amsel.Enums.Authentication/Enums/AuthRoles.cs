@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using Amsel.Enums.Authentication.Enums;
 using JetBrains.Annotations;
 
-namespace Amsel.Framework.Structure.Enums
+namespace Amsel.Enums.Authentication.Enums
 {
     public static class AuthRoles
     {
