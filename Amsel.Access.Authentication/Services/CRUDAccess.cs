@@ -5,7 +5,7 @@ using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Structure.Service;
-using Amsel.Framework.Utilities.Extentions.Http;
+using Amsel.Framework.Utilities.Extensions.Http;
 using Amsel.Resources.Authentication.Controller;
 using JetBrains.Annotations;
 using Syncfusion.EJ2.Blazor;

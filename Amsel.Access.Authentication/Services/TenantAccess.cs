@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Amsel.DTO.Authentication.Models;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
-using Amsel.Framework.Utilities.Extentions.Http;
+using Amsel.Framework.Utilities.Extensions.Http;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
 using JetBrains.Annotations;

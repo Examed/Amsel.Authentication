@@ -57,7 +57,7 @@ namespace Amsel.Enums.Authentication.EnumStrings
             if (scopeList.Contains("analytics:read:games"))
                 scope |= ETwitchScope.HELIX_ANALYTICS_READ_GAMES;
             if (scopeList.Contains("analytics:read:extensions"))
-                scope |= ETwitchScope.HELIX_ANALYTICS_READ_EXTENTIONS;
+                scope |= ETwitchScope.HELIX_ANALYTICS_READ_ExtensionS;
             if (scopeList.Contains("bits:read"))
                 scope |= ETwitchScope.HELIX_BITS_READ;
             if (scopeList.Contains("user:edit:broadcast"))
@@ -126,7 +126,7 @@ namespace Amsel.Enums.Authentication.EnumStrings
                 builder.Append("clips:edit ");
             if (scope.HasFlag(ETwitchScope.HELIX_ANALYTICS_READ_GAMES))
                 builder.Append("analytics:read:games ");
-            if (scope.HasFlag(ETwitchScope.HELIX_ANALYTICS_READ_EXTENTIONS))
+            if (scope.HasFlag(ETwitchScope.HELIX_ANALYTICS_READ_ExtensionS))
                 builder.Append("analytics:read:extensions ");
             if (scope.HasFlag(ETwitchScope.HELIX_BITS_READ))
                 builder.Append("bits:read ");
