@@ -5,7 +5,6 @@ using Amsel.DTO.Authentication.Models;
 using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
-using Amsel.Framework.Structure.Service;
 using Amsel.Framework.Utilities.Extensions.Http;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
@@ -28,7 +27,8 @@ namespace Amsel.Access.Authentication.Services
         #endregion
 
         [NotNull]
-        public async Task<IEnumerable<AccountDTO>> GetAllAsync() {
+        public async Task<IEnumerable<AccountDTO>> GetAllAsync()
+        {
             HttpResponseMessage response = await GetAsync(AllAccountURL).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<IEnumerable<AccountDTO>>().ConfigureAwait(false);
         }

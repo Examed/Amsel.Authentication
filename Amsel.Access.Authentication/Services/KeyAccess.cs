@@ -17,17 +17,18 @@ namespace Amsel.Access.Authentication.Services
 
         #endregion
 
-        [NotNull]
-        private static readonly HttpClient Client = new HttpClient();
+        [NotNull] private static readonly HttpClient Client = new HttpClient();
 
         [NotNull]
-        public static async Task<RSACryptoServiceProvider> GetPublicKeyAsync() {
+        public static async Task<RSACryptoServiceProvider> GetPublicKeyAsync()
+        {
             string content = await GetPublicKeyStringAsync().ConfigureAwait(false);
             return RSACryptoKeyHelper.PublicKeyFromString(content);
         }
 
         [NotNull]
-        private static async Task<string> GetPublicKeyStringAsync() {
+        private static async Task<string> GetPublicKeyStringAsync()
+        {
             HttpResponseMessage response = await Client.GetAsync(PublicKeyURL.GetURL()).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             return await (response.Content?.ReadAsStringAsync()).ConfigureAwait(false);

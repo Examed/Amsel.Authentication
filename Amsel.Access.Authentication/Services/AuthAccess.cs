@@ -1,6 +1,5 @@
 ﻿using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
-using Amsel.Framework.Structure.Service;
 
 namespace Amsel.Access.Authentication.Services
 {

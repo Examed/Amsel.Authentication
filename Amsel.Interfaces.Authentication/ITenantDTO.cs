@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Amsel.DTO.Authentication.Models;
 
-namespace Amsel.DTO.Authentication.Models
+namespace Amsel.Interfaces.Authentication
 {
     public interface ITenantDTO
     {

@@ -8,7 +8,8 @@ namespace Amsel.DTO.Authentication.Models
         public DateTime ExpireTime { get; set; }
         public string Token { get; set; }
 
-        public bool Expired() {
+        public bool Expired()
+        {
             if (string.IsNullOrEmpty(Token))
                 return true;
 
@@ -23,7 +24,8 @@ namespace Amsel.DTO.Authentication.Models
         protected AuthTokenDTO() { }
 
         [JsonConstructor]
-        public AuthTokenDTO(string token, DateTime expireTime) {
+        public AuthTokenDTO(string token, DateTime expireTime)
+        {
             Token = token;
             ExpireTime = expireTime;
         }

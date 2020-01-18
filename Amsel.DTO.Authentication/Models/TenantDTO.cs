@@ -1,5 +1,4 @@
 ﻿using System;
-using JetBrains.Annotations;
 
 namespace Amsel.DTO.Authentication.Models
 {

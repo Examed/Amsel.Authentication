@@ -6,7 +6,8 @@ namespace Amsel.DTO.Authentication.Models
     {
         #region  CONSTRUCTORS
 
-        public TwitchTokenDTO(string accessToken, ETwitchScope scope) {
+        public TwitchTokenDTO(string accessToken, ETwitchScope scope)
+        {
             AccessToken = accessToken;
             Scope = scope;
         }
