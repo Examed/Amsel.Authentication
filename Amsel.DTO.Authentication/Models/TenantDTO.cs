@@ -7,5 +7,6 @@ namespace Amsel.DTO.Authentication.Models
     {
         public Guid Id { get; set; }
         public string TenantName { get; set; }
+        public bool Admin { get; set; }
     }
 }
