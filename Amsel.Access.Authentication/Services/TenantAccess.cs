@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Amsel.DTO.Authentication.Models;
+using Amsel.Framework.Base.DTO;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Utilities.Extensions.Http;
@@ -12,7 +13,7 @@ using JetBrains.Annotations;
 
 namespace Amsel.Access.Authentication.Services
 {
-    public class TenantAccess : CRUDAccess<TenantDTO>
+    public class TenantAccess : CRUDAccess<MultiTenantDTO>
     {
         #region  CONSTRUCTORS
 
@@ -23,23 +24,23 @@ namespace Amsel.Access.Authentication.Services
 
         public async Task<Guid?> GetIdByNameAsync(string name)
         {
-            TenantDTO tenant = await GetTenantByNameAsync(name).ConfigureAwait(false);
+            MultiTenantDTO tenant = await GetTenantByNameAsync(name).ConfigureAwait(false);
             return tenant.Id;
         }
 
         [NotNull]
-        public async Task<TenantDTO> GetTenantByNameAsync(string name)
+        public async Task<MultiTenantDTO> GetTenantByNameAsync(string name)
         {
             KeyValuePair<string, object> nameValue = new KeyValuePair<string, object>("name", name);
             HttpResponseMessage response = await GetAsync(TenantGet, nameValue).ConfigureAwait(false);
-            return await response.DeserializeElseThrowAsync<TenantDTO>().ConfigureAwait(false);
+            return await response.DeserializeElseThrowAsync<MultiTenantDTO>().ConfigureAwait(false);
         }
 
-        public async Task<TenantDTO> GetTenantAsync(Guid id)
+        public async Task<MultiTenantDTO> GetTenantAsync(Guid id)
         {
             KeyValuePair<string, object> idValue = new KeyValuePair<string, object>("id", id.ToString());
             HttpResponseMessage response = await GetAsync(TenantGet, idValue).ConfigureAwait(false);
-            return await response.DeserializeElseThrowAsync<TenantDTO>().ConfigureAwait(false);
+            return await response.DeserializeElseThrowAsync<MultiTenantDTO>().ConfigureAwait(false);
         }
 
         #region STATICS, CONST and FIELDS
