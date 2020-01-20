@@ -7,7 +7,7 @@
         public const string GET_ALL = "all";
         public const string READ = "read";
         public const string INSERT = "insert";
-        public const string REMOVE = "remove";
+        public const string REMOVE = "remove/{id}";
         public const string UPDATE = "update";
     }
 }
