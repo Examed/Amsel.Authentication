@@ -11,7 +11,9 @@ using Syncfusion.EJ2.Blazor;
 
 namespace Amsel.Access.Authentication.Services
 {
-    // TODO seperated Project
+    // TODO move to Project
+
+
     public abstract class CRUDAccess<TEntity> : GenericAccess
     {
         protected CRUDAccess(IAuthenticationService authService) : base(authService) { }
@@ -60,20 +62,10 @@ namespace Amsel.Access.Authentication.Services
         [NotNull]
         public virtual async Task<TEntity> UpdateAsync(TEntity data)
         {
+
             HttpResponseMessage response = await PostAsync(UpdateAddress, GetJsonContent(data)).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
-
-
-        //public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadAsync(string jsonLogicFilter = null, int? skip = null, int? take = null)
-        //{
-        //    Dictionary<string, object> parameters = new Dictionary<string, object> { { nameof(skip), skip.ToString() }, { nameof(take), take.ToString() } };
-        //    if (!jsonLogicFilter.IsNullOrEmpty())
-        //        parameters.Add(nameof(jsonLogicFilter), JsonConvert.SerializeObject(jsonLogicFilter));
-
-        //    HttpResponseMessage response = await GetAsync(ReadAddress, parameters).ConfigureAwait(false);
-        //    return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int? count)>().ConfigureAwait(false);
-        //}
 
         public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadAsync(DataManagerRequest dm = null)
         {

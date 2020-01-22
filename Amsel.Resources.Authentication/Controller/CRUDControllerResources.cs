@@ -9,5 +9,5 @@
         public const string INSERT = "insert";
         public const string REMOVE = "remove/{id}";
         public const string UPDATE = "update";
-    }
+        }
 }
