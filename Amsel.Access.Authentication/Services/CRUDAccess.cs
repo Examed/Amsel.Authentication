@@ -67,7 +67,12 @@ namespace Amsel.Access.Authentication.Services
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
-        public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadAsync(DataManagerRequest dm = null)
+        public virtual async Task<IEnumerable<TEntity>> ReadAsync(DataManagerRequest dm = null)
+        {
+            return (await ReadCountAsync(dm)).value;
+        }
+
+        public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadCountAsync(DataManagerRequest dm = null)
         {
             HttpResponseMessage response = await PostAsync(ReadAddress, GetJsonContent(dm)).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int? count)>().ConfigureAwait(false);
