@@ -31,15 +31,13 @@ namespace Amsel.Access.Authentication.Services
         [NotNull]
         public async Task<MultiTenantDTO> GetTenantByNameAsync(string name)
         {
-            KeyValuePair<string, object> nameValue = new KeyValuePair<string, object>("name", name);
-            HttpResponseMessage response = await GetAsync(TenantGet, nameValue).ConfigureAwait(false);
+            HttpResponseMessage response = await GetAsync(TenantGet, ("name", name)).ConfigureAwait(false);
             return await response.DeserializeElseThrowAsync<MultiTenantDTO>().ConfigureAwait(false);
         }
 
         public async Task<MultiTenantDTO> GetTenantAsync(Guid id)
         {
-            KeyValuePair<string, object> idValue = new KeyValuePair<string, object>("id", id.ToString());
-            HttpResponseMessage response = await GetAsync(TenantGet, idValue).ConfigureAwait(false);
+            HttpResponseMessage response = await GetAsync(TenantGet, ("id", id)).ConfigureAwait(false);
             return await response.DeserializeElseThrowAsync<MultiTenantDTO>().ConfigureAwait(false);
         }
 

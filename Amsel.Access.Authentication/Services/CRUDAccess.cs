@@ -25,7 +25,7 @@ namespace Amsel.Access.Authentication.Services
 
 
         [NotNull] protected virtual APIAddress ReadAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.READ);
-
+        [NotNull] protected virtual APIAddress ReadEJ2Address => new APIAddress(Endpoint, Resource, CRUDControllerResources.READ_EJ2);
         [NotNull] protected virtual APIAddress InsertAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.INSERT);
 
         [NotNull] protected virtual APIAddress UpdateAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.UPDATE);
@@ -34,6 +34,7 @@ namespace Amsel.Access.Authentication.Services
 
         [NotNull] protected virtual APIAddress GetByIdAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.GET_BY_ID);
 
+        [NotNull] protected virtual APIAddress GetAllAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.GET_ALL);
 
         [NotNull]
         public virtual async Task<TEntity> InsertAsync(TEntity data)
@@ -54,7 +55,7 @@ namespace Amsel.Access.Authentication.Services
         [NotNull]
         public virtual async Task<TEntity> GetByIdAsync(object id)
         {
-            HttpResponseMessage response = await GetAsync(GetByIdAddress, new KeyValuePair<string, object>("id", id.ToString())).ConfigureAwait(false);
+            HttpResponseMessage response = await GetAsync(GetByIdAddress, ("id", id)).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
@@ -67,15 +68,22 @@ namespace Amsel.Access.Authentication.Services
             return await response.DeserializeOrDefaultAsync<TEntity>().ConfigureAwait(false);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> ReadAsync(DataManagerRequest dm = null)
+        public virtual async Task<IEnumerable<TEntity>> GetAllAsync(int? skip = null, int? take = null)
         {
-            return (await ReadCountAsync(dm)).value;
+            HttpResponseMessage response = await GetAsync(GetAllAddress, (nameof(skip),skip), (nameof(take),take)).ConfigureAwait(false);
+            return await response.DeserializeOrDefaultAsync<IEnumerable<TEntity>>().ConfigureAwait(false);
         }
 
-        public virtual async Task<(IEnumerable<TEntity> value, int? count)> ReadCountAsync(DataManagerRequest dm = null)
+        public virtual async Task<(IEnumerable<TEntity> value, int count)> ReadAsync(int? skip = null, int? take = null)
         {
-            HttpResponseMessage response = await PostAsync(ReadAddress, GetJsonContent(dm)).ConfigureAwait(false);
-            return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int? count)>().ConfigureAwait(false);
+            HttpResponseMessage response = await PostAsync(ReadAddress, (nameof(skip),skip), (nameof(take),take)).ConfigureAwait(false);
+            return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int count)>().ConfigureAwait(false);
+        }
+
+        public virtual async Task<(IEnumerable<TEntity> value, int count)> ReadEJ2Async(DataManagerRequest dm = null)
+        {
+            HttpResponseMessage response = await PostAsync(ReadEJ2Address, GetJsonContent(dm)).ConfigureAwait(false);
+            return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int count)>().ConfigureAwait(false);
         }
     }
 }
