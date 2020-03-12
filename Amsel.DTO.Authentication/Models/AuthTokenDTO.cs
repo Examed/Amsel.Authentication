@@ -1,23 +1,26 @@
-﻿using System;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
+using System;
 
 namespace Amsel.DTO.Authentication.Models
 {
     public class AuthTokenDTO
     {
         public DateTime ExpireTime { get; set; }
+
         public string Token { get; set; }
 
+        #region PUBLIC METHODES
         public bool Expired()
         {
-            if (string.IsNullOrEmpty(Token))
+            if(string.IsNullOrEmpty(Token))
                 return true;
 
-            if (ExpireTime == default)
+            if(ExpireTime == default)
                 return false;
 
             return ExpireTime < DateTime.UtcNow;
         }
+        #endregion
 
         #region  CONSTRUCTORS
 
@@ -29,7 +32,6 @@ namespace Amsel.DTO.Authentication.Models
             Token = token;
             ExpireTime = expireTime;
         }
-
         #endregion
     }
 }

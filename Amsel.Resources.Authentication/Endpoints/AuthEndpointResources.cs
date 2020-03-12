@@ -9,7 +9,6 @@
         public const string AUTH = "";
         public const string KEY = "";
         public const string ACCOUNT = "account";
-
         #endregion
     }
 }

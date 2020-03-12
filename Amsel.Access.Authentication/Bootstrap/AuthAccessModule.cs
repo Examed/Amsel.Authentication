@@ -3,7 +3,7 @@ using Autofac;
 
 namespace Amsel.Access.Authentication.Bootstrap
 {
-    /// <inheritdoc />
+    /// <inheritdoc/>
     public class AuthAccessModule : Module
     {
         protected override void Load(ContainerBuilder builder)

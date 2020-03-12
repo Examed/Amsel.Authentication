@@ -1,14 +1,15 @@
-﻿using System.Net.Http;
-using System.Threading.Tasks;
-using Amsel.Framework.Structure.Client.Service;
+﻿using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using JetBrains.Annotations;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Amsel.Access.Authentication.Services
 {
     public class TestAccess : GenericAccess
     {
+        #region PUBLIC METHODES
         public async Task<string> GetAnonymousTestAsync()
         {
             HttpResponseMessage response = await GetAsync(AnonymousURL).ConfigureAwait(false);
@@ -20,6 +21,7 @@ namespace Amsel.Access.Authentication.Services
             HttpResponseMessage response = await GetAsync(AuthorizedURL).ConfigureAwait(false);
             return await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
         }
+        #endregion
 
         #region STATICS, CONST and FIELDS
 
@@ -32,8 +34,9 @@ namespace Amsel.Access.Authentication.Services
 
         public TestAccess() { }
 
-        public TestAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
-
+        public TestAccess(IAuthenticationService authenticationService) : base(authenticationService)
+        {
+        }
         #endregion
     }
 }

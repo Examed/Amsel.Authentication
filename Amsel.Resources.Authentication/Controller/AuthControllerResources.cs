@@ -14,7 +14,6 @@
 
         // TODO
         public const string REVOKE_ = "revoke";
-
         #endregion
     }
 }

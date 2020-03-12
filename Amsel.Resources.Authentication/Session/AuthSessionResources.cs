@@ -5,7 +5,6 @@
         #region STATICS, CONST and FIELDS
 
         public const string ACCOUNT_ID = "Account.Id";
-
-        #endregion
+    #endregion
     }
 }

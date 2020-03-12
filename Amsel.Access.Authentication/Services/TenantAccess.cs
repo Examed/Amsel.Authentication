@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Amsel.DTO.Authentication.Models;
-using Amsel.Framework.Base.DTO;
+﻿using Amsel.Framework.Base.DTO;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Utilities.Extensions.Http;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
 using JetBrains.Annotations;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Amsel.Access.Authentication.Services
 {
@@ -19,6 +17,7 @@ namespace Amsel.Access.Authentication.Services
 
         public TenantAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
+        #region PUBLIC METHODES
         #endregion
 
 
@@ -28,29 +27,29 @@ namespace Amsel.Access.Authentication.Services
             return tenant.Id;
         }
 
+        public async Task<MultiTenantDTO> GetTenantAsync(Guid id)
+        {
+            HttpResponseMessage response = await GetAsync(TenantGet, (nameof(id), id)).ConfigureAwait(false);
+            return await response.DeserializeElseThrowAsync<MultiTenantDTO>().ConfigureAwait(false);
+        }
+
         [NotNull]
         public async Task<MultiTenantDTO> GetTenantByNameAsync(string name)
         {
-            HttpResponseMessage response = await GetAsync(TenantGet, ("name", name)).ConfigureAwait(false);
+            HttpResponseMessage response = await GetAsync(TenantGet, (nameof(name), name)).ConfigureAwait(false);
             return await response.DeserializeElseThrowAsync<MultiTenantDTO>().ConfigureAwait(false);
         }
-
-        public async Task<MultiTenantDTO> GetTenantAsync(Guid id)
-        {
-            HttpResponseMessage response = await GetAsync(TenantGet, ("id", id)).ConfigureAwait(false);
-            return await response.DeserializeElseThrowAsync<MultiTenantDTO>().ConfigureAwait(false);
-        }
+        #endregion
 
         #region STATICS, CONST and FIELDS
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         protected override string Endpoint => AuthEndpointResources.ENDPOINT;
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         protected override string Resource => AuthEndpointResources.TENANT;
 
         [NotNull] private APIAddress TenantGet => new APIAddress(Endpoint, Resource, TenantControllerResources.GET);
-
-        #endregion
+    #endregion
     }
 }

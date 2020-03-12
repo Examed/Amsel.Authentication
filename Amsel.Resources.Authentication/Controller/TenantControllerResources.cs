@@ -6,7 +6,6 @@
 
         public const string GET = "get";
         public const string CREATE = "create/{name}";
-
         #endregion
     }
 }

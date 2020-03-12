@@ -1,13 +1,66 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using JetBrains.Annotations;
 
 namespace Amsel.Enums.Authentication.Enums
 {
     public static class AuthRoles
     {
+        #region PUBLIC METHODES
+        [NotNull]
+        public static IEnumerable<string> GetPaymentPolicy(this ESubscriptionPolicy role)
+        {
+            List<string> result = new List<string> { role.ToString(), nameof(ESubscriptionPolicy.NONE) };
+
+            if(!role.HasFlag(ESubscriptionPolicy.TIER_1))
+                result.Add(nameof(ESubscriptionPolicy.TIER_1));
+            if(!role.HasFlag(ESubscriptionPolicy.TIER_2))
+                result.Add(nameof(ESubscriptionPolicy.TIER_2));
+            if(!role.HasFlag(ESubscriptionPolicy.TIER_3))
+                result.Add(nameof(ESubscriptionPolicy.TIER_3));
+            if(!role.HasFlag(ESubscriptionPolicy.PREMIUM))
+                result.Add(nameof(ESubscriptionPolicy.PREMIUM));
+
+            return result;
+        }
+
+        [NotNull]
+        public static IEnumerable<string> GetRoles(this ERoles role)
+        {
+            List<string> result = new List<string>();
+
+            if(role.HasFlag(ERoles.VIEWER))
+                result.Add(nameof(ERoles.VIEWER));
+            if(role.HasFlag(ERoles.MODERATOR))
+                result.Add(nameof(ERoles.MODERATOR));
+            if(role.HasFlag(ERoles.EDITOR))
+                result.Add(nameof(ERoles.EDITOR));
+            if(role.HasFlag(ERoles.CLIENT))
+                result.Add(nameof(ERoles.CLIENT));
+            if(role.HasFlag(ERoles.SERVICE))
+                result.Add(nameof(ERoles.SERVICE));
+            if(role.HasFlag(ERoles.ADMIN))
+                result.Add(nameof(ERoles.ADMIN));
+
+            return result;
+        }
+
+        public static bool HasPaymentPolicy(this ESubscriptionPolicy policy, IEnumerable<Claim> claims)
+        {
+            if(policy == ESubscriptionPolicy.NONE)
+                return true;
+
+            Claim claim = claims?.FirstOrDefault(x => x.Type.Equals(nameof(EClaimTypes.SUBSCRIPTION_LEVEL)));
+            if(claim == null)
+                return false;
+
+            Enum.TryParse(claim.Value, out ESubscriptionPolicy value);
+            return value.HasFlag(policy);
+        }
+        #endregion
+
         #region ERoles enum
 
         [Flags]
@@ -25,7 +78,7 @@ namespace Amsel.Enums.Authentication.Enums
             NOBODY
         }
 
-        #endregion
+            #endregion
 
         #region ESubscriptionPolicy enum
 
@@ -37,58 +90,6 @@ namespace Amsel.Enums.Authentication.Enums
             TIER_3 = TIER_2 | (1 << 3),
             PREMIUM = TIER_3 | (1 << 4)
         }
-
         #endregion
-
-        [NotNull]
-        public static IEnumerable<string> GetRoles(this ERoles role)
-        {
-            List<string> result = new List<string>();
-
-            if (role.HasFlag(ERoles.VIEWER))
-                result.Add(nameof(ERoles.VIEWER));
-            if (role.HasFlag(ERoles.MODERATOR))
-                result.Add(nameof(ERoles.MODERATOR));
-            if (role.HasFlag(ERoles.EDITOR))
-                result.Add(nameof(ERoles.EDITOR));
-            if (role.HasFlag(ERoles.CLIENT))
-                result.Add(nameof(ERoles.CLIENT));
-            if (role.HasFlag(ERoles.SERVICE))
-                result.Add(nameof(ERoles.SERVICE));
-            if (role.HasFlag(ERoles.ADMIN))
-                result.Add(nameof(ERoles.ADMIN));
-
-            return result;
-        }
-
-        public static bool HasPaymentPolicy(this ESubscriptionPolicy policy, IEnumerable<Claim> claims)
-        {
-            if (policy == ESubscriptionPolicy.NONE)
-                return true;
-
-            Claim claim = claims?.FirstOrDefault(x => x.Type.Equals(nameof(EClaimTypes.SUBSCRIPTION_LEVEL)));
-            if (claim == null)
-                return false;
-
-            Enum.TryParse(claim.Value, out ESubscriptionPolicy value);
-            return value.HasFlag(policy);
-        }
-
-        [NotNull]
-        public static IEnumerable<string> GetPaymentPolicy(this ESubscriptionPolicy role)
-        {
-            List<string> result = new List<string> {role.ToString(), nameof(ESubscriptionPolicy.NONE)};
-
-            if (!role.HasFlag(ESubscriptionPolicy.TIER_1))
-                result.Add(nameof(ESubscriptionPolicy.TIER_1));
-            if (!role.HasFlag(ESubscriptionPolicy.TIER_2))
-                result.Add(nameof(ESubscriptionPolicy.TIER_2));
-            if (!role.HasFlag(ESubscriptionPolicy.TIER_3))
-                result.Add(nameof(ESubscriptionPolicy.TIER_3));
-            if (!role.HasFlag(ESubscriptionPolicy.PREMIUM))
-                result.Add(nameof(ESubscriptionPolicy.PREMIUM));
-
-            return result;
-        }
     }
 }

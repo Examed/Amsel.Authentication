@@ -4,9 +4,10 @@ namespace Amsel.Enums.Authentication.EnumStrings
 {
     public static class ClaimTypesHelper
     {
+        #region PUBLIC METHODES
         public static string ToEnumString(this EClaimTypes claim)
         {
-            switch (claim)
+            switch(claim)
             {
                 case EClaimTypes.TWITCH_ID:
                     return "TwitchId";
@@ -27,5 +28,6 @@ namespace Amsel.Enums.Authentication.EnumStrings
                     return string.Empty;
             }
         }
+        #endregion
     }
 }

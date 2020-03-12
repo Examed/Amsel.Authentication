@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Amsel.DTO.Authentication.Models;
+﻿using Amsel.DTO.Authentication.Models;
 using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
@@ -9,6 +6,9 @@ using Amsel.Framework.Utilities.Extensions.Http;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
 using JetBrains.Annotations;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Amsel.Access.Authentication.Services
 {
@@ -23,14 +23,15 @@ namespace Amsel.Access.Authentication.Services
         #region  CONSTRUCTORS
 
         public AccountAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
-
         #endregion
 
+        #region PUBLIC METHODES
         [NotNull]
         public async Task<IEnumerable<AccountDTO>> GetAllAsync()
         {
             HttpResponseMessage response = await GetAsync(AllAccountURL).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<IEnumerable<AccountDTO>>().ConfigureAwait(false);
         }
+        #endregion
     }
 }

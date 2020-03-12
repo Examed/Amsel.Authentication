@@ -6,7 +6,6 @@
 
         public const string REDIRECT = "Auth.Redirect";
         public const string TOKEN = "Auth.Token";
-
         #endregion
     }
 }

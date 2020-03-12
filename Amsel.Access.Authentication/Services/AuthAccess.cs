@@ -10,7 +10,6 @@ namespace Amsel.Access.Authentication.Services
         public AuthAccess() { }
 
         public AuthAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
-
         #endregion
     }
 }
