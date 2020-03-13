@@ -6,6 +6,7 @@ using Amsel.Framework.Utilities.Extensions.Http;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
 using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -16,7 +17,8 @@ namespace Amsel.Access.Authentication.Services
     {
         #region STATICS, CONST and FIELDS
 
-        [NotNull] private static readonly APIAddress AllAccountURL = new APIAddress(AuthEndpointResources.ENDPOINT, AuthEndpointResources.ACCOUNT, AccountControllerResources.GET_ALL);
+        private const bool RequestLocal =false;
+        [NotNull] private static readonly UriBuilder AllAccountURL = UriBuilderFactory.GetAPIBuilder(AuthEndpointResources.ENDPOINT, AuthEndpointResources.ACCOUNT, AccountControllerResources.GET_ALL, RequestLocal);
 
         #endregion
 

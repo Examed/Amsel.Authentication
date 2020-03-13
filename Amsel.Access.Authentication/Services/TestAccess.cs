@@ -2,6 +2,7 @@
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using JetBrains.Annotations;
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -25,8 +26,8 @@ namespace Amsel.Access.Authentication.Services
 
         #region STATICS, CONST and FIELDS
 
-        [NotNull] public static readonly APIAddress AnonymousURL = new APIAddress("auth", "/test", "/Anonymous");
-        [NotNull] public static readonly APIAddress AuthorizedURL = new APIAddress("auth", "/test", "/Authorized");
+        [NotNull] public static readonly UriBuilder AnonymousURL = UriBuilderFactory.GetAPIBuilder("auth", "/test", "/Anonymous");
+        [NotNull] public static readonly UriBuilder AuthorizedURL = UriBuilderFactory.GetAPIBuilder("auth", "/test", "/Authorized");
 
         #endregion
 

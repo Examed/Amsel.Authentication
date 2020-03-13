@@ -49,7 +49,9 @@ namespace Amsel.Access.Authentication.Services
         /// <inheritdoc/>
         protected override string Resource => AuthEndpointResources.TENANT;
 
-        [NotNull] private APIAddress TenantGet => new APIAddress(Endpoint, Resource, TenantControllerResources.GET);
-    #endregion
+        [NotNull] private UriBuilder TenantGet => UriBuilderFactory.GetAPIBuilder(Endpoint, Resource, TenantControllerResources.GET, RequestLocal);
+
+        protected override bool RequestLocal =>false;
+        #endregion
     }
 }

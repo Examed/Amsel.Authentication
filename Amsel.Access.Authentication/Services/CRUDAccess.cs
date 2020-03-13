@@ -5,33 +5,35 @@ using Amsel.Framework.Utilities.Extensions.Http;
 using Amsel.Resources.Authentication.Controller;
 using JetBrains.Annotations;
 using Syncfusion.EJ2.Blazor;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Amsel.Access.Authentication.Services
 {
-    // TODO move to Project
     public abstract class CRUDAccess<TEntity> : GenericAccess
     {
         [NotNull] protected abstract string Endpoint { get; }
+        [NotNull] protected abstract bool RequestLocal { get; }
 
-        [NotNull] protected virtual APIAddress GetAllAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.GET_ALL);
+        [NotNull] protected virtual UriBuilder GetAllAddress => UriBuilderFactory.GetAPIBuilder(Endpoint, Resource, CRUDControllerResources.GET_ALL, RequestLocal);
 
-        [NotNull] protected virtual APIAddress GetByIdAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.GET_BY_ID);
+        [NotNull] protected virtual UriBuilder GetByIdAddress => UriBuilderFactory.GetAPIBuilder(Endpoint, Resource, CRUDControllerResources.GET_BY_ID, RequestLocal);
 
-        [NotNull] protected virtual APIAddress InsertAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.INSERT);
+        [NotNull] protected virtual UriBuilder InsertAddress => UriBuilderFactory.GetAPIBuilder(Endpoint, Resource, CRUDControllerResources.INSERT, RequestLocal);
 
-        [NotNull] protected virtual APIAddress ReadAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.READ);
+        [NotNull] protected virtual UriBuilder ReadAddress => UriBuilderFactory.GetAPIBuilder(Endpoint, Resource, CRUDControllerResources.READ, RequestLocal);
 
-        [NotNull] protected virtual APIAddress ReadEJ2Address => new APIAddress(Endpoint, Resource, CRUDControllerResources.READ_EJ2);
+        [NotNull] protected virtual UriBuilder ReadEJ2Address => UriBuilderFactory.GetAPIBuilder(Endpoint, Resource, CRUDControllerResources.READ_EJ2, RequestLocal);
 
-        [NotNull] protected virtual APIAddress RemoveAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.REMOVE);
+        [NotNull] protected virtual UriBuilder RemoveAddress => UriBuilderFactory.GetAPIBuilder(Endpoint, Resource, CRUDControllerResources.REMOVE, RequestLocal);
 
         [NotNull] protected abstract string Resource { get; }
 
-        [NotNull] protected virtual APIAddress UpdateAddress => new APIAddress(Endpoint, Resource, CRUDControllerResources.UPDATE);
+        [NotNull] protected virtual UriBuilder UpdateAddress => UriBuilderFactory.GetAPIBuilder(Endpoint, Resource, CRUDControllerResources.UPDATE, RequestLocal);
 
+        protected CRUDAccess(MultiTenantName tenantName, IAuthenticationService authService) : base(tenantName, authService) { }
         protected CRUDAccess(IAuthenticationService authService) : base(authService) { }
 
         #region PUBLIC METHODES
@@ -58,7 +60,7 @@ namespace Amsel.Access.Authentication.Services
 
         public virtual async Task<(IEnumerable<TEntity> value, int count)> ReadAsync(int? skip = null, int? take = null)
         {
-            HttpResponseMessage response = await PostAsync(ReadAddress, (nameof(skip), skip), (nameof(take), take))
+            HttpResponseMessage response = await PostAsync(ReadAddress, null, (nameof(skip), skip), (nameof(take), take))
                                                      .ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<(IEnumerable<TEntity> value, int count)>()
                              .ConfigureAwait(false);
