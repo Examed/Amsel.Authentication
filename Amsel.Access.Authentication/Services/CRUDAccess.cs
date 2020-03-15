@@ -1,5 +1,6 @@
 ﻿using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
+using Amsel.Framework.Structure.Models;
 using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Utilities.Extensions.Http;
 using Amsel.Resources.Authentication.Controller;
@@ -33,7 +34,7 @@ namespace Amsel.Access.Authentication.Services
 
         [NotNull] protected virtual UriBuilder UpdateAddress => UriBuilderFactory.GetAPIBuilder(Endpoint, Resource, CRUDControllerResources.UPDATE, RequestLocal);
 
-        protected CRUDAccess(MultiTenantName tenantName, IAuthenticationService authService) : base(tenantName, authService) { }
+        protected CRUDAccess(TenantName tenantName, IAuthenticationService authService) : base(tenantName, authService) { }
         protected CRUDAccess(IAuthenticationService authService) : base(authService) { }
 
         #region PUBLIC METHODES
