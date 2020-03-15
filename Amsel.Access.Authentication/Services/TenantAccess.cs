@@ -14,7 +14,7 @@ namespace Amsel.Access.Authentication.Services
     public class TenantAccess : CRUDAccess<MultiTenantDTO>
     {
         #region  CONSTRUCTORS
-
+       
         public TenantAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
         #region PUBLIC METHODES

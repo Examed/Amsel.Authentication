@@ -25,6 +25,7 @@ namespace Amsel.DTO.Authentication.Models
         #region  CONSTRUCTORS
 
         protected AuthTokenDTO() { }
+        public AuthTokenDTO(string token) {  Token = token;}
 
         [JsonConstructor]
         public AuthTokenDTO(string token, DateTime expireTime)
