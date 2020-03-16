@@ -37,8 +37,6 @@ namespace Amsel.Enums.Authentication.Enums
                 result.Add(nameof(ERoles.MODERATOR));
             if(role.HasFlag(ERoles.EDITOR))
                 result.Add(nameof(ERoles.EDITOR));
-            if(role.HasFlag(ERoles.CLIENT))
-                result.Add(nameof(ERoles.CLIENT));
             if(role.HasFlag(ERoles.SERVICE))
                 result.Add(nameof(ERoles.SERVICE));
             if(role.HasFlag(ERoles.ADMIN))
@@ -71,9 +69,9 @@ namespace Amsel.Enums.Authentication.Enums
             MODERATOR = VIEWER | (1 << 1),
             EDITOR = VIEWER | MODERATOR | (1 << 2),
 
-            CLIENT = EDITOR | (1 << 3),
+            STREAMER = EDITOR | (1 << 7),
 
-            SERVICE = CLIENT | (1 << 7),
+            SERVICE = STREAMER | (1 << 7),
             ADMIN = SERVICE | (1 << 8),
             NOBODY
         }

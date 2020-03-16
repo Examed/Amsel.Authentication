@@ -1,9 +1,11 @@
 ﻿using Amsel.Framework.Base.DTO;
+using Amsel.Framework.Structure.Blazor.Authorize;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Utilities.Extensions.Http;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
+using Autofac.Features.AttributeFilters;
 using JetBrains.Annotations;
 using System;
 using System.Net.Http;
@@ -11,10 +13,18 @@ using System.Threading.Tasks;
 
 namespace Amsel.Access.Authentication.Services
 {
+
+    public class TenantServiceAccess : TenantAccess
+    {
+        public TenantServiceAccess(SecretAuthentication authentication) : base(authentication)
+        {
+        }
+    }
+    
     public class TenantAccess : CRUDAccess<MultiTenantDTO>
     {
         #region  CONSTRUCTORS
-       
+
         public TenantAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
         #region PUBLIC METHODES
@@ -51,7 +61,7 @@ namespace Amsel.Access.Authentication.Services
 
         [NotNull] private UriBuilder TenantGet => UriBuilderFactory.GetAPIBuilder(Endpoint, Resource, TenantControllerResources.GET, RequestLocal);
 
-        protected override bool RequestLocal =>false;
+        protected override bool RequestLocal => false;
         #endregion
     }
 }

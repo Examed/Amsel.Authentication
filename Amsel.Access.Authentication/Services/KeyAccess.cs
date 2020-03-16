@@ -1,7 +1,11 @@
-﻿using Amsel.Framework.Structure.Models.Address;
+﻿using Amsel.Framework.Structure.Blazor.Authorize;
+using Amsel.Framework.Structure.Client.Service;
+using Amsel.Framework.Structure.Interfaces;
+using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Utilities.Helper;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
+using Autofac.Features.AttributeFilters;
 using JetBrains.Annotations;
 using System;
 using System.Net.Http;
@@ -10,9 +14,12 @@ using System.Threading.Tasks;
 
 namespace Amsel.Access.Authentication.Services
 {
-    public static class KeyAccess
+    public class KeyAccess : GenericAccess
     {
-        [NotNull] private static readonly HttpClient Client = new HttpClient();
+        public KeyAccess( ):base()
+        {
+
+        }
         #region STATICS, CONST and FIELDS
 
         private const bool RequestLocal = false;
@@ -20,16 +27,16 @@ namespace Amsel.Access.Authentication.Services
         #endregion
 
         [NotNull]
-        private static async Task<string> GetPublicKeyStringAsync()
+        private async Task<string> GetPublicKeyStringAsync()
         {
-            HttpResponseMessage response = await Client.GetAsync(PublicKeyURL.Uri).ConfigureAwait(false);
+            HttpResponseMessage response = await GetAsync(PublicKeyURL).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             return await (response.Content?.ReadAsStringAsync()).ConfigureAwait(false);
         }
 
         #region PUBLIC METHODES
         [NotNull]
-        public static async Task<RSACryptoServiceProvider> GetPublicKeyAsync()
+        public async Task<RSACryptoServiceProvider> GetPublicKeyAsync()
         {
             string content = await GetPublicKeyStringAsync().ConfigureAwait(false);
             return RSACryptoKeyHelper.PublicKeyFromString(content);

@@ -4,7 +4,7 @@
     {
         #region STATICS, CONST and FIELDS
 
-        public const string CLIENT = "client";
+        public const string SECRET = "secret";
         public const string TWITCH = "twitch";
         public const string LOGIN = "";
         public const string SESSION = "session";
