@@ -1,9 +1,7 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 
-namespace Amsel.Model.Authentication.Account
+namespace Amsel.Model.Authentication.AccountModels
 {
     public class AccountInfo : AccountBase
     {

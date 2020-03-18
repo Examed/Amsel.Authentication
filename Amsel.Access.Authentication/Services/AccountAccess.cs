@@ -1,13 +1,10 @@
-﻿using Amsel.DTO.Authentication.Models;
-using Amsel.Framework.Structure.Blazor.Authorize;
-using Amsel.Framework.Structure.Client.Service;
+﻿using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Utilities.Extensions.Http;
 using Amsel.Model.Authentication.Account;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
-using Autofac.Features.AttributeFilters;
 using JetBrains.Annotations;
 using System;
 using System.Collections.Generic;

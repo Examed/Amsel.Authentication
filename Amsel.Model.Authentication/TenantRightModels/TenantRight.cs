@@ -1,11 +1,9 @@
 ﻿using Amsel.Enums.Authentication.Enums;
-using Amsel.Framework.Database.SQL.Interfaces;
-using Amsel.Model.Authentication.Account;
+using Amsel.Model.Authentication.AccountModels;
 using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Amsel.Endpoint.Authentication.Persistence

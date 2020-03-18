@@ -1,8 +1,6 @@
-﻿using Amsel.Framework.Structure.Blazor.Authorize;
-using Amsel.Framework.Structure.Client.Service;
+﻿using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
-using Autofac.Features.AttributeFilters;
 using JetBrains.Annotations;
 using System;
 using System.Net.Http;

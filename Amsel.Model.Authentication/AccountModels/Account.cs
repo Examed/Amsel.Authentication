@@ -1,24 +1,22 @@
 ﻿using Amsel.Enums.Authentication.Enums;
 using Amsel.Enums.Authentication.EnumStrings;
-using Amsel.Framework.Database.SQL.Interfaces;
+using Amsel.Framework.Base.Interfaces;
 using Amsel.Framework.Utilities.Extensions.Guids;
 using Amsel.Framework.Utilities.Extensions.Types;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Amsel.Endpoint.Authentication.Persistence;
-using Amsel.Framework.Database.SQL.Models;
 
-namespace Amsel.Model.Authentication.Account
+namespace Amsel.Model.Authentication.AccountModels
 {
     [ComplexType]
-    public class Account : AccountInfo, IGuidEntity, ISynchronize<Tenant>
+    public class Account : AccountInfo, IGuidEntity, ISynchronize<Tenant.TenantModels.TenantEntity>
     {
         [DefaultValue(null)]
         public string ClientSecret { get; protected set; }

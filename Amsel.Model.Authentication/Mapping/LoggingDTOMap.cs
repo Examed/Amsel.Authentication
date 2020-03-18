@@ -1,6 +1,5 @@
-﻿
-using Amsel.Framework.Database.SQL.Models;
-using Amsel.Model.Authentication.Account;
+﻿using Amsel.Model.Authentication.AccountModels;
+using Amsel.Model.Tenant.TenantModels;
 using AutoMapper;
 
 namespace Amsel.Endpoint.Logging.Utilities.Mapping.DTO
@@ -9,7 +8,7 @@ namespace Amsel.Endpoint.Logging.Utilities.Mapping.DTO
     {
         public AuthenticationDTOMap()
         {
-            CreateMap<Account, Tenant>();
+            CreateMap<Account, TenantEntity>();
         }
 
     }

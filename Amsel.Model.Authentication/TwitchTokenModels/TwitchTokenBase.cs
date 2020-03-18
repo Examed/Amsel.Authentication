@@ -1,6 +1,5 @@
 ﻿using Amsel.Enums.Authentication.Enums;
 using Newtonsoft.Json;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Amsel.Endpoint.Authentication.Persistence
