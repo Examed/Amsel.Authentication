@@ -1,12 +1,14 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Amsel.DTO.Authentication.Models
 {
-    public class AuthTokenDTO
+    public class AuthToken
     {
         public DateTime ExpireTime { get; set; }
 
+        [Required]
         public string Token { get; set; }
 
         #region PUBLIC METHODES
@@ -24,11 +26,11 @@ namespace Amsel.DTO.Authentication.Models
 
         #region  CONSTRUCTORS
 
-        protected AuthTokenDTO() { }
-        public AuthTokenDTO(string token) {  Token = token;}
+        protected AuthToken() { }
+        public AuthToken(string token) {  Token = token;}
 
         [JsonConstructor]
-        public AuthTokenDTO(string token, DateTime expireTime)
+        public AuthToken(string token, DateTime expireTime)
         {
             Token = token;
             ExpireTime = expireTime;

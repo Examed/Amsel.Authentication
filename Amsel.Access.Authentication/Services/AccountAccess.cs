@@ -4,6 +4,7 @@ using Amsel.Framework.Structure.Client.Service;
 using Amsel.Framework.Structure.Interfaces;
 using Amsel.Framework.Structure.Models.Address;
 using Amsel.Framework.Utilities.Extensions.Http;
+using Amsel.Model.Authentication.Account;
 using Amsel.Resources.Authentication.Controller;
 using Amsel.Resources.Authentication.Endpoints;
 using Autofac.Features.AttributeFilters;
@@ -39,10 +40,10 @@ namespace Amsel.Access.Authentication.Services
 
         #region PUBLIC METHODES
         [NotNull]
-        public async Task<IEnumerable<AccountDTO>> GetAllAsync()
+        public async Task<IEnumerable<Account>> GetAllAsync()
         {
             HttpResponseMessage response = await GetAsync(AllAccountURL).ConfigureAwait(false);
-            return await response.DeserializeOrDefaultAsync<IEnumerable<AccountDTO>>().ConfigureAwait(false);
+            return await response.DeserializeOrDefaultAsync<IEnumerable<Account>>().ConfigureAwait(false);
         }
         #endregion
     }

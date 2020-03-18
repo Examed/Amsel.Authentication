@@ -5,6 +5,8 @@ namespace Amsel.Enums.Authentication.Enums
     [Flags]
     public enum ETwitchScope
     {
+        NONE = 0,
+
         CHANNEL_CHECK_SUBSCRIPTION = 1 << 1,
         CHANNEL_COMMERCIAL = 1 << 2,
         CHANNEL_EDITOR = 1 << 3,
