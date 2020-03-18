@@ -1,10 +1,8 @@
 ﻿using Amsel.Enums.Authentication.Enums;
 using Amsel.Enums.Authentication.EnumStrings;
-using Amsel.Framework.Base.DTO;
 using Amsel.Framework.Database.SQL.Interfaces;
 using Amsel.Framework.Utilities.Extensions.Guids;
 using Amsel.Framework.Utilities.Extensions.Types;
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,11 +13,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Amsel.Endpoint.Authentication.Persistence;
+using Amsel.Framework.Database.SQL.Models;
 
 namespace Amsel.Model.Authentication.Account
 {
     [ComplexType]
-    public class Account : AccountInfo, IGuidEntity, ISynchronize<TenantDTO>
+    public class Account : AccountInfo, IGuidEntity, ISynchronize<Tenant>
     {
         [DefaultValue(null)]
         public string ClientSecret { get; protected set; }
