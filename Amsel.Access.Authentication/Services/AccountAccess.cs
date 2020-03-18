@@ -17,7 +17,7 @@ namespace Amsel.Access.Authentication.Services
 {
     public class AccountServiceAccess : AccountAccess
     {
-        public AccountServiceAccess(SecretAuthentication authentication) : base(authentication)
+        public AccountServiceAccess(ISecretAuthenticationService authentication) : base(authentication)
         {
         }
 

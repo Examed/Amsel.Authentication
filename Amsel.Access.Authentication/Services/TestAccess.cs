@@ -13,7 +13,7 @@ namespace Amsel.Access.Authentication.Services
     public class TestServiceAccess : TestAccess
     {
 
-        public TestServiceAccess(SecretAuthentication authentication) : base(authentication)
+        public TestServiceAccess(ISecretAuthenticationService authentication) : base(authentication)
         {
 
         }

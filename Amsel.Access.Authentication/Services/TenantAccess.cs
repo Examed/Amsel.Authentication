@@ -15,7 +15,7 @@ namespace Amsel.Access.Authentication.Services
 
     public class TenantServiceAccess : TenantAccess
     {
-        public TenantServiceAccess(SecretAuthentication authentication) : base(authentication)
+        public TenantServiceAccess(ISecretAuthenticationService authentication) : base(authentication)
         {
         }
     }
