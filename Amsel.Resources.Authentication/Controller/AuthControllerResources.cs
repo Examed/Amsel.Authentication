@@ -2,17 +2,15 @@
 {
     public static class AuthControllerResources
     {
-        #region STATICS, CONST and FIELDS
-
-        public const string SECRET = "secret";
-        public const string TWITCH = "twitch";
         public const string LOGIN = "";
-        public const string SESSION = "session";
 
         public const string LOGOUT = "logout";
 
         // TODO
         public const string REVOKE_ = "revoke";
-        #endregion
+
+        public const string SECRET = "secret";
+        public const string SESSION = "session";
+        public const string TWITCH = "twitch";
     }
 }

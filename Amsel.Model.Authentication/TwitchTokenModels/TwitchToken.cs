@@ -7,26 +7,42 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Amsel.Endpoint.Authentication.Persistence
+namespace Amsel.Model.Authentication.TwitchTokenModels
 {
-    [Owned, ComplexType]
+    [Owned]
+    [ComplexType]
     public class TwitchToken : TwitchTokenBase
     {
-        [DefaultValue(null)]
-        public DateTime ExpireTime { get; protected set; }
+        protected TwitchToken() { }
 
-        [DefaultValue(null)]
-        public string RefreshToken { get; protected set; }
+        [JsonConstructor]
+        public TwitchToken([JsonProperty("access_Token")]string token,
+                           [JsonProperty("scope")] List<string> scope,
+                           [JsonProperty("expires_in")] double expireId,
+                           [JsonProperty("refresh_Token")] string refreshToken)
+        {
+            AccessToken = token;
+
+            if(scope == null)
+                Scope = ETwitchScope.NONE;
+            else
+                Scope = scope.GetScopes();
+
+            if(expireId > 0)
+                ExpireTime = expireId.Equals(double.MaxValue) ? DateTime.MaxValue : DateTime.UtcNow.AddSeconds(expireId);
+            ;
+
+            RefreshToken = refreshToken;
+        }
 
 
-        #region PUBLIC METHODES
         public bool IsExpired()
         {
-            if (ExpireTime == null)
+            if(ExpireTime == null)
                 return false;
-            if (ExpireTime == default)
+            if(ExpireTime == default)
                 return false;
-            if (ExpireTime >= DateTime.UtcNow)
+            if(ExpireTime >= DateTime.UtcNow)
                 return false;
             return true;
         }
@@ -39,23 +55,10 @@ namespace Amsel.Endpoint.Authentication.Persistence
             ExpireTime = token.ExpireTime;
         }
 
-        protected TwitchToken() { }
+        [DefaultValue(null)]
+        public DateTime ExpireTime { get; protected set; }
 
-        [JsonConstructor]
-        public TwitchToken([JsonProperty("access_Token")]string token, [JsonProperty("scope")] List<string> scope, [JsonProperty("expires_in")] double expireId, [JsonProperty("refresh_Token")] string refreshToken)
-        {
-            AccessToken = token;
-
-            if (scope == null)
-                Scope = ETwitchScope.NONE;
-            else
-                Scope = scope.GetScopes();
-
-            if (expireId > 0)
-                ExpireTime = expireId.Equals(double.MaxValue) ? DateTime.MaxValue : DateTime.UtcNow.AddSeconds(expireId); ;
-            
-            RefreshToken = refreshToken;
-        }
-        #endregion
+        [DefaultValue(null)]
+        public string RefreshToken { get; protected set; }
     }
 }

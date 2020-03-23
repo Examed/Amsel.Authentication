@@ -8,7 +8,6 @@ namespace Amsel.Enums.Authentication.Enums
 {
     public static class AuthRoles
     {
-        #region PUBLIC METHODES
         [NotNull]
         public static IEnumerable<string> GetPaymentPolicy(this ESubscriptionPolicy role)
         {
@@ -57,9 +56,7 @@ namespace Amsel.Enums.Authentication.Enums
             Enum.TryParse(claim.Value, out ESubscriptionPolicy value);
             return value.HasFlag(policy);
         }
-        #endregion
 
-        #region ERoles enum
 
         [Flags]
         public enum ERoles
@@ -76,9 +73,6 @@ namespace Amsel.Enums.Authentication.Enums
             NOBODY
         }
 
-            #endregion
-
-        #region ESubscriptionPolicy enum
 
         public enum ESubscriptionPolicy
         {
@@ -88,6 +82,5 @@ namespace Amsel.Enums.Authentication.Enums
             TIER_3 = TIER_2 | (1 << 3),
             PREMIUM = TIER_3 | (1 << 4)
         }
-        #endregion
     }
 }

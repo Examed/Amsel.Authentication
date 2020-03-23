@@ -2,14 +2,14 @@
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
-namespace Amsel.Endpoint.Authentication.Persistence
+namespace Amsel.Model.Authentication.TwitchTokenModels
 {
     public class TwitchTokenBase
     {
         [Required]
-        public ETwitchScope Scope { get; protected set; }
+        public string AccessToken { get; protected set; }
 
         [Required]
-        public string AccessToken { get; protected set; }
+        public ETwitchScope Scope { get; protected set; }
     }
 }

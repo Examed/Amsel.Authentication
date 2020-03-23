@@ -5,19 +5,6 @@ namespace Amsel.Model.Authentication.AccountModels
 {
     public class AccountInfo : AccountBase
     {
-        [DefaultValue(false)]
-        public virtual bool Admin { get; protected set; }
-
-        [DefaultValue(false)]
-        public virtual bool Banned { get; protected set; }
-
-        [EmailAddress]
-        public virtual string Email { get;  set; }
-
-        [DefaultValue(false)]
-        public virtual bool Premium { get; protected set; }
-
-        #region PUBLIC METHODES
         /// <summary>
         /// Ban the Account and restricted it from authenticate
         /// </summary>
@@ -27,6 +14,17 @@ namespace Amsel.Model.Authentication.AccountModels
         /// UnBan the Account and allow it to authenticate
         /// </summary>
         public virtual void UnBanAccount() => Banned = false;
-        #endregion
+
+        [DefaultValue(false)]
+        public virtual bool Admin { get; protected set; }
+
+        [DefaultValue(false)]
+        public virtual bool Banned { get; protected set; }
+
+        [EmailAddress]
+        public virtual string Email { get; set; }
+
+        [DefaultValue(false)]
+        public virtual bool Premium { get; protected set; }
     }
 }

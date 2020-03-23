@@ -1,4 +1,5 @@
 ﻿using Amsel.Access.Authentication.Services;
+using Amsel.Access.Tenant.Bootstrap;
 using Autofac;
 
 namespace Amsel.Access.Authentication.Bootstrap
