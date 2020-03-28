@@ -11,8 +11,6 @@
     <PackageReference Include="Syncfusion.EJ2.Blazor" Version="17.4.0.55" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Amsel.Framework\Amsel.Framework.Base\Amsel.Framework.Base.csproj" />
-    <ProjectReference Include="..\..\..\Amsel.Framework\Amsel.Framework.Structure\Amsel.Framework.Structure.Client\Amsel.Framework.Structure.Client.csproj" />
     <ProjectReference Include="..\..\..\Amsel.Framework\Amsel.Framework.Structure\Amsel.Framework.Structure\Amsel.Framework.Structure.csproj" />
     <ProjectReference Include="..\..\..\Amsel.Framework\Amsel.Framework.Utilities\Amsel.Framework.Utilities.csproj" />
     <ProjectReference Include="..\..\Amsel.Tenant\Amsel.Access.Tenant\Amsel.Access.Tenant.csproj" />
