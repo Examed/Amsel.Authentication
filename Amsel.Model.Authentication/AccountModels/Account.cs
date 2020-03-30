@@ -30,10 +30,11 @@ namespace Amsel.Model.Authentication.AccountModels
 
         string GetRightsAccountString([NotNull] IEnumerable<TenantRight> rights)
         {
-            if(rights == null)
-                throw new ArgumentNullException(nameof(rights));
+            if (rights == null || !rights.Any())
+                return string.Empty;
+
             StringBuilder builder = new StringBuilder();
-            foreach(TenantRight item in from TenantRight item in rights where item != null select item)
+            foreach (TenantRight item in from TenantRight item in rights where item != null && item.Tenant != null select item)
                 builder.Append($"{item.Tenant.Id};");
 
             return builder.ToString().TrimEnd(';');
@@ -41,10 +42,10 @@ namespace Amsel.Model.Authentication.AccountModels
 
         public void AddTenantRights([NotNull] Account tenant, ETenantRights rights)
         {
-            if(tenant == null)
+            if (tenant == null)
                 throw new ArgumentNullException(nameof(tenant));
             TenantRight current = TenantRights.FirstOrDefault(x => x.Tenant.Id == tenant.Id);
-            if(current == null)
+            if (current == null)
                 TenantRights.Add(new TenantRight(rights, tenant));
             else
                 current.Add(rights);
@@ -61,17 +62,17 @@ namespace Amsel.Model.Authentication.AccountModels
                 new Claim(ClaimTypes.Name, Name)
             };
 
-            if(Admin || Premium)
+            if (Admin || Premium)
                 claimsIdentity.Add(new Claim(nameof(EClaimTypes.SUBSCRIPTION_LEVEL), nameof(AuthRoles.ESubscriptionPolicy.PREMIUM)));
 
             string banned = GetRightsAccountString(TenantRights.Where(x => x.IsBanned()));
-            if(!string.IsNullOrEmpty(banned))
+            if (!string.IsNullOrEmpty(banned))
                 claimsIdentity.Add(new Claim(EClaimTypes.TENANT_BANNED.ToEnumString(), banned));
             string editor = GetRightsAccountString(TenantRights.Where(x => x.HasRights(ETenantRights.EDITOR)));
-            if(!string.IsNullOrEmpty(editor))
+            if (!string.IsNullOrEmpty(editor))
                 claimsIdentity.Add(new Claim(EClaimTypes.TENANT_EDITOR.ToEnumString(), editor));
             string moderator = GetRightsAccountString(TenantRights.Where(x => !x.HasRights(ETenantRights.EDITOR) && x.HasRights(ETenantRights.MODERATOR)));
-            if(!string.IsNullOrEmpty(moderator))
+            if (!string.IsNullOrEmpty(moderator))
                 claimsIdentity.Add(new Claim(EClaimTypes.TENANT_MODERATOR.ToEnumString(), moderator));
 
             return claimsIdentity;
@@ -79,28 +80,28 @@ namespace Amsel.Model.Authentication.AccountModels
 
         public void RemoveRights([NotNull] Account tenant, ETenantRights rights)
         {
-            if(tenant == null)
+            if (tenant == null)
                 throw new ArgumentNullException(nameof(tenant));
-            if(!Enum.IsDefined(typeof(ETenantRights), rights))
+            if (!Enum.IsDefined(typeof(ETenantRights), rights))
                 throw new InvalidEnumArgumentException(nameof(rights), (int)rights, typeof(ETenantRights));
 
             TenantRight current = TenantRights.FirstOrDefault(x => (x != null) && (x.Tenant.Id == tenant.Id));
-            if(current == null)
+            if (current == null)
                 return;
 
             current.Remove(rights);
-            if(current.Rights.HasNoFlags<ETenantRights>())
+            if (current.Rights.HasNoFlags<ETenantRights>())
                 TenantRights.Remove(current);
         }
 
         public void SetTwitchToken(TwitchToken twitchToken)
         {
-            if((twitchToken == null) || twitchToken.IsExpired())
+            if ((twitchToken == null) || twitchToken.IsExpired())
                 return;
 
-            if(TwitchToken == null)
+            if (TwitchToken == null)
                 TwitchToken = twitchToken;
-            else if(TwitchToken.IsExpired() || twitchToken.Scope.HasFlag(TwitchToken.Scope))
+            else if (TwitchToken.IsExpired() || twitchToken.Scope.HasFlag(TwitchToken.Scope))
                 TwitchToken.UpdateToken(twitchToken);
         }
 
