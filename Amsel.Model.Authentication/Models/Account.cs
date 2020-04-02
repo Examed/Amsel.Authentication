@@ -3,12 +3,12 @@ using Amsel.Enums.Authentication.EnumStrings;
 using Amsel.Framework.Base.Interfaces;
 using Amsel.Framework.Utilities.Extensions.Guids;
 using Amsel.Framework.Utilities.Extensions.Types;
-using Amsel.Model.Authentication.TenantRightModels;
-using Amsel.Model.Authentication.TwitchTokenModels;
+using Amsel.Model.Authentication.Models;
 using Amsel.Model.Tenant.TenantModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -18,13 +18,13 @@ using System.Text;
 namespace Amsel.Model.Authentication.AccountModels
 {
     [ComplexType]
-    public class Account : AccountInfo, IGuidEntity, ISynchronize<TenantEntity>
+    public partial class Account : AccountInfo, IGuidEntity, ISynchronize<TenantEntity>
     {
         protected Account() { }
 
-        public Account(string tenantName, string twitchId = null)
+        public Account(string name, string twitchId = null)
         {
-            TenantName = tenantName;
+            Name = name;
             TwitchId = twitchId;
         }
 
@@ -35,7 +35,7 @@ namespace Amsel.Model.Authentication.AccountModels
 
             StringBuilder builder = new StringBuilder();
             foreach (TenantRight item in from TenantRight item in rights where item != null && item.Tenant != null select item)
-                builder.Append($"{item.Tenant.Id};");
+                builder.Append($"{item.Tenant.Name};");
 
             return builder.ToString().TrimEnd(';');
         }
@@ -57,9 +57,7 @@ namespace Amsel.Model.Authentication.AccountModels
         {
             List<Claim> claimsIdentity = new List<Claim>
             {
-                (Admin ? (new Claim(ClaimTypes.Role, AuthRoles.ERoles.ADMIN.ToString())) : (new Claim(ClaimTypes.Role, AuthRoles.ERoles.VIEWER.ToString()))),
-                new Claim(ClaimTypes.Sid, Id.ToString()),
-                new Claim(ClaimTypes.Name, Name)
+                (Admin ? (new Claim(ClaimTypes.Role, AuthRoles.ERoles.ADMIN.ToString())) : (new Claim(ClaimTypes.Role, AuthRoles.ERoles.VIEWER.ToString()))), new Claim(ClaimTypes.Name, Name)
             };
 
             if (Admin || Premium)
@@ -67,13 +65,13 @@ namespace Amsel.Model.Authentication.AccountModels
 
             string banned = GetRightsAccountString(TenantRights.Where(x => x.IsBanned()));
             if (!string.IsNullOrEmpty(banned))
-                claimsIdentity.Add(new Claim(EClaimTypes.TENANT_BANNED.ToEnumString(), banned));
+                claimsIdentity.Add(new Claim(EClaimTypes.TENANT_BANNED.ToString(), banned));
             string editor = GetRightsAccountString(TenantRights.Where(x => x.HasRights(ETenantRights.EDITOR)));
             if (!string.IsNullOrEmpty(editor))
-                claimsIdentity.Add(new Claim(EClaimTypes.TENANT_EDITOR.ToEnumString(), editor));
+                claimsIdentity.Add(new Claim(EClaimTypes.TENANT_EDITOR.ToString(), editor));
             string moderator = GetRightsAccountString(TenantRights.Where(x => !x.HasRights(ETenantRights.EDITOR) && x.HasRights(ETenantRights.MODERATOR)));
             if (!string.IsNullOrEmpty(moderator))
-                claimsIdentity.Add(new Claim(EClaimTypes.TENANT_MODERATOR.ToEnumString(), moderator));
+                claimsIdentity.Add(new Claim(EClaimTypes.TENANT_MODERATOR.ToString(), moderator));
 
             return claimsIdentity;
         }
@@ -109,11 +107,48 @@ namespace Amsel.Model.Authentication.AccountModels
         public string ClientSecret { get; protected set; }
 
         [DefaultValue(null)]
-        public string TenantName { get; set; }
+        public bool IsTenant { get; set; }
 
         [NotNull]
-        public ICollection<TenantRight> TenantRights { get; protected set; } = new List<TenantRight>();
+        public virtual ICollection<TenantRight> TenantRights { get; protected set; } = new List<TenantRight>();
 
-        public TwitchToken TwitchToken { get; protected set; }
+        public virtual TwitchToken TwitchToken { get; protected set; }
+    }
+
+
+    public class AccountInfo : AccountBase
+    {
+        /// <summary>
+        /// Ban the Account and restricted it from authenticate
+        /// </summary>
+        public virtual void BanAccount() => Banned = true;
+
+        /// <summary>
+        /// UnBan the Account and allow it to authenticate
+        /// </summary>
+        public virtual void UnBanAccount() => Banned = false;
+
+        [DefaultValue(false)]
+        public virtual bool Admin { get; protected set; }
+
+        [DefaultValue(false)]
+        public virtual bool Banned { get; protected set; }
+
+        [EmailAddress]
+        public virtual string Email { get; set; }
+
+        [DefaultValue(false)]
+        public virtual bool Premium { get; protected set; }
+    }
+    public class AccountBase
+    {
+        [Key]
+        public Guid Id { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public virtual string TwitchId { get; protected set; }
     }
 }

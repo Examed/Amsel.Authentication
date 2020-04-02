@@ -5,9 +5,10 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Amsel.Model.Authentication.TwitchTokenModels
+namespace Amsel.Model.Authentication.Models
 {
     [Owned]
     [ComplexType]
@@ -60,5 +61,13 @@ namespace Amsel.Model.Authentication.TwitchTokenModels
 
         [DefaultValue(null)]
         public string RefreshToken { get; protected set; }
+    }
+    public class TwitchTokenBase
+    {
+        [Required]
+        public string AccessToken { get; protected set; }
+
+        [Required]
+        public ETwitchScope Scope { get; protected set; }
     }
 }

@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Amsel.Model.Authentication.AuthTokenModels
+namespace Amsel.Model.Authentication.Models
 {
     public class AuthToken
     {

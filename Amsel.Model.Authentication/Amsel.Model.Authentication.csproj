@@ -18,4 +18,9 @@
     <ProjectReference Include="..\Amsel.Enums.Authentication\Amsel.Enums.Authentication.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="AccountModels\" />
+    <Folder Include="AuthTokenModels\" />
+  </ItemGroup>
+
 </Project>

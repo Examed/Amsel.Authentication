@@ -13,13 +13,13 @@ namespace Amsel.Enums.Authentication.Enums
         {
             List<string> result = new List<string> { role.ToString(), nameof(ESubscriptionPolicy.NONE) };
 
-            if(!role.HasFlag(ESubscriptionPolicy.TIER_1))
+            if (!role.HasFlag(ESubscriptionPolicy.TIER_1))
                 result.Add(nameof(ESubscriptionPolicy.TIER_1));
-            if(!role.HasFlag(ESubscriptionPolicy.TIER_2))
+            if (!role.HasFlag(ESubscriptionPolicy.TIER_2))
                 result.Add(nameof(ESubscriptionPolicy.TIER_2));
-            if(!role.HasFlag(ESubscriptionPolicy.TIER_3))
+            if (!role.HasFlag(ESubscriptionPolicy.TIER_3))
                 result.Add(nameof(ESubscriptionPolicy.TIER_3));
-            if(!role.HasFlag(ESubscriptionPolicy.PREMIUM))
+            if (!role.HasFlag(ESubscriptionPolicy.PREMIUM))
                 result.Add(nameof(ESubscriptionPolicy.PREMIUM));
 
             return result;
@@ -30,15 +30,15 @@ namespace Amsel.Enums.Authentication.Enums
         {
             List<string> result = new List<string>();
 
-            if(role.HasFlag(ERoles.VIEWER))
+            if (role.HasFlag(ERoles.VIEWER))
                 result.Add(nameof(ERoles.VIEWER));
-            if(role.HasFlag(ERoles.MODERATOR))
+            if (role.HasFlag(ERoles.MODERATOR))
                 result.Add(nameof(ERoles.MODERATOR));
-            if(role.HasFlag(ERoles.EDITOR))
+            if (role.HasFlag(ERoles.EDITOR))
                 result.Add(nameof(ERoles.EDITOR));
-            if(role.HasFlag(ERoles.SERVICE))
+            if (role.HasFlag(ERoles.SERVICE))
                 result.Add(nameof(ERoles.SERVICE));
-            if(role.HasFlag(ERoles.ADMIN))
+            if (role.HasFlag(ERoles.ADMIN))
                 result.Add(nameof(ERoles.ADMIN));
 
             return result;
@@ -46,11 +46,11 @@ namespace Amsel.Enums.Authentication.Enums
 
         public static bool HasPaymentPolicy(this ESubscriptionPolicy policy, IEnumerable<Claim> claims)
         {
-            if(policy == ESubscriptionPolicy.NONE)
+            if (policy == ESubscriptionPolicy.NONE)
                 return true;
 
             Claim claim = claims?.FirstOrDefault(x => x.Type.Equals(nameof(EClaimTypes.SUBSCRIPTION_LEVEL)));
-            if(claim == null)
+            if (claim == null)
                 return false;
 
             Enum.TryParse(claim.Value, out ESubscriptionPolicy value);
@@ -61,26 +61,22 @@ namespace Amsel.Enums.Authentication.Enums
         [Flags]
         public enum ERoles
         {
-            VIEWER = 1,
-
-            MODERATOR = VIEWER | (1 << 1),
-            EDITOR = VIEWER | MODERATOR | (1 << 2),
-
-            STREAMER = EDITOR | (1 << 7),
-
-            SERVICE = STREAMER | (1 << 7),
-            ADMIN = SERVICE | (1 << 8),
-            NOBODY
+            VIEWER = 0,
+            MODERATOR = VIEWER | (1 << 0),
+            EDITOR = VIEWER | MODERATOR | (1 << 1),
+            STREAMER = EDITOR | (1 << 2),
+            SERVICE = STREAMER | (1 << 3),
+            ADMIN = SERVICE | (1 << 4)
         }
 
 
         public enum ESubscriptionPolicy
         {
             NONE = 0,
-            TIER_1 = NONE | (1 << 1),
-            TIER_2 = TIER_1 | (1 << 2),
-            TIER_3 = TIER_2 | (1 << 3),
-            PREMIUM = TIER_3 | (1 << 4)
+            TIER_1 = NONE | (1 << 0),
+            TIER_2 = TIER_1 | (1 << 1),
+            TIER_3 = TIER_2 | (1 << 2),
+            PREMIUM = TIER_3 | (1 << 3)
         }
     }
 }
