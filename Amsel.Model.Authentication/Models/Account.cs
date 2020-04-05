@@ -43,7 +43,7 @@ namespace Amsel.Model.Authentication.AccountModels
         {
             if (tenant == null)
                 throw new ArgumentNullException(nameof(tenant));
-            TenantRight current = TenantRights.FirstOrDefault(x => x.Tenant.Id == tenant.Id);
+            TenantRight current = TenantRights.FirstOrDefault(x => x.TenantId == tenant.Id);
             if (current == null)
                 TenantRights.Add(new TenantRight(rights, tenant));
             else
@@ -82,7 +82,7 @@ namespace Amsel.Model.Authentication.AccountModels
             if (!Enum.IsDefined(typeof(ETenantRights), rights))
                 throw new InvalidEnumArgumentException(nameof(rights), (int)rights, typeof(ETenantRights));
 
-            TenantRight current = TenantRights.FirstOrDefault(x => (x != null) && (x.Tenant.Id == tenant.Id));
+            TenantRight current = TenantRights.FirstOrDefault(x => (x != null) && (x.TenantId == tenant.Id));
             if (current == null)
                 return;
 
