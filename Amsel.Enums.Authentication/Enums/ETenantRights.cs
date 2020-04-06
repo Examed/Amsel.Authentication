@@ -6,8 +6,8 @@ namespace Amsel.Enums.Authentication.Enums
     public enum ETenantRights
     {
         NONE = 0,
-        BANNED = (1 << 0),
-        MODERATOR = (1 << 1),
+        BANNED = 1 << 0,
+        MODERATOR = 1 << 1,
         EDITOR = MODERATOR | (1 << 2)
     }
 }

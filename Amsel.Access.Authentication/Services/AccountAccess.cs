@@ -20,21 +20,20 @@ namespace Amsel.Access.Authentication.Services
 
     public class AccountAccess : GenericAccess
     {
-        const bool RequestLocal = false;
+        private const bool RequestLocal = false;
 
-        [NotNull] static readonly UriBuilder AllAccountURL = UriBuilderFactory.GetAPIBuilder(AuthEndpointResources.ENDPOINT,
-                                                                                             AuthEndpointResources.ACCOUNT,
-                                                                                             AccountControllerResources.GET_ALL,
-                                                                                             RequestLocal);
-
+        [NotNull]
+        private static readonly UriBuilder AllAccountURL = UriBuilderFactory.GetAPIBuilder(AuthEndpointResources.ENDPOINT, AuthEndpointResources.ACCOUNT, AccountControllerResources.GET_ALL, RequestLocal);
 
         public AccountAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
+        #region PUBLIC METHODES
         [NotNull]
         public async Task<IEnumerable<Account>> GetAllAsync()
         {
             HttpResponseMessage response = await GetAsync(AllAccountURL).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<IEnumerable<Account>>().ConfigureAwait(false);
         }
+        #endregion
     }
 }

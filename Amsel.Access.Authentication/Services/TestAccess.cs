@@ -18,11 +18,10 @@ namespace Amsel.Access.Authentication.Services
         [NotNull] public static readonly UriBuilder AnonymousURL = UriBuilderFactory.GetAPIBuilder("auth", "/test", "/Anonymous");
         [NotNull] public static readonly UriBuilder AuthorizedURL = UriBuilderFactory.GetAPIBuilder("auth", "/test", "/Authorized");
 
-
         public TestAccess() { }
-
         public TestAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
+        #region PUBLIC METHODES
         public async Task<string> GetAnonymousTestAsync()
         {
             HttpResponseMessage response = await GetAsync(AnonymousURL).ConfigureAwait(false);
@@ -34,5 +33,6 @@ namespace Amsel.Access.Authentication.Services
             HttpResponseMessage response = await GetAsync(AuthorizedURL).ConfigureAwait(false);
             return await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
         }
+        #endregion
     }
 }

@@ -14,13 +14,15 @@ namespace Amsel.Model.Authentication.Models
     [ComplexType]
     public class TwitchToken : TwitchTokenBase
     {
-        protected TwitchToken() { }
+        [DefaultValue(null)]
+        public DateTime ExpireTime { get; protected set; }
 
+        [DefaultValue(null)]
+        public string RefreshToken { get; protected set; }
+
+        protected TwitchToken() { }
         [JsonConstructor]
-        public TwitchToken([JsonProperty("access_Token")]string token,
-                           [JsonProperty("scope")] List<string> scope,
-                           [JsonProperty("expires_in")] double expireId,
-                           [JsonProperty("refresh_Token")] string refreshToken)
+        public TwitchToken([JsonProperty("access_Token")]string token, [JsonProperty("scope")] List<string> scope, [JsonProperty("expires_in")] double expireId, [JsonProperty("refresh_Token")] string refreshToken)
         {
             AccessToken = token;
 
@@ -36,7 +38,7 @@ namespace Amsel.Model.Authentication.Models
             RefreshToken = refreshToken;
         }
 
-
+        #region PUBLIC METHODES
         public bool IsExpired()
         {
             if(ExpireTime == null)
@@ -55,13 +57,9 @@ namespace Amsel.Model.Authentication.Models
             Scope = token.Scope;
             ExpireTime = token.ExpireTime;
         }
-
-        [DefaultValue(null)]
-        public DateTime ExpireTime { get; protected set; }
-
-        [DefaultValue(null)]
-        public string RefreshToken { get; protected set; }
+        #endregion
     }
+
     public class TwitchTokenBase
     {
         [Required]

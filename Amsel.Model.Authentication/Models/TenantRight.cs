@@ -12,18 +12,25 @@ namespace Amsel.Model.Authentication.AccountModels
         [Owned]
         public class TenantRight
         {
-            protected TenantRight() { }
+            public ETenantRights Rights { get; set; }
 
+            [ForeignKey(nameof(TenantId))]
+            public virtual Account Tenant { get; set; }
+
+            public Guid TenantId { get; set; }
+
+            protected TenantRight() { }
 
             public TenantRight(ETenantRights rights, [NotNull] Account tenant)
             {
-                if (!Enum.IsDefined(typeof(ETenantRights), rights))
+                if(!Enum.IsDefined(typeof(ETenantRights), rights))
                     throw new InvalidEnumArgumentException(nameof(rights), (int)rights, typeof(ETenantRights));
 
                 Rights = rights;
                 Tenant = tenant ?? throw new ArgumentNullException(nameof(tenant));
             }
 
+            #region PUBLIC METHODES
             public void Add(ETenantRights rights) => Rights |= rights;
 
             public bool HasRights(ETenantRights rights) => !IsBanned() && Rights.HasFlag(rights);
@@ -31,12 +38,7 @@ namespace Amsel.Model.Authentication.AccountModels
             public bool IsBanned() => Rights.HasFlag(ETenantRights.BANNED);
 
             public void Remove(ETenantRights rights) => Rights &= ~rights;
-
-            public ETenantRights Rights { get; set; }
-
-            [ForeignKey(nameof(TenantId))]
-            public virtual Account Tenant { get; set; }
-            public Guid TenantId { get; set; }
+            #endregion
         }
     }
 }
