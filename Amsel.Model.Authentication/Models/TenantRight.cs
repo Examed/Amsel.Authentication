@@ -17,7 +17,7 @@ namespace Amsel.Model.Authentication.AccountModels
             [ForeignKey(nameof(TenantId))]
             public virtual Account Tenant { get; set; }
 
-            public Guid TenantId { get; set; }
+            public Guid? TenantId { get; set; }
 
             protected TenantRight() { }
 
