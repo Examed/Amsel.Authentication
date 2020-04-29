@@ -1,5 +1,4 @@
-﻿namespace Amsel.Resources.Authentication.Endpoints
-{
+﻿namespace Amsel.Resources.Authentication.Endpoints {
     public static class AuthEndpointResources
     {
         public const string ACCOUNT = "account";

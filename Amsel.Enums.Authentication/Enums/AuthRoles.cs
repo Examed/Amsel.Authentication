@@ -4,61 +4,74 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace Amsel.Enums.Authentication.Enums
-{
+namespace Amsel.Enums.Authentication.Enums {
     public static class AuthRoles
     {
-        #region PUBLIC METHODES
         [NotNull]
-        public static IEnumerable<string> GetPaymentPolicy(this ESubscriptionPolicy role)
-        {
+        public static IEnumerable<string> GetPaymentPolicy(this ESubscriptionPolicy role) {
             List<string> result = new List<string> { role.ToString(), nameof(ESubscriptionPolicy.NONE) };
 
-            if(!role.HasFlag(ESubscriptionPolicy.TIER_1))
+            if(!role.HasFlag(ESubscriptionPolicy.TIER_1)) {
                 result.Add(nameof(ESubscriptionPolicy.TIER_1));
-            if(!role.HasFlag(ESubscriptionPolicy.TIER_2))
+            }
+
+            if(!role.HasFlag(ESubscriptionPolicy.TIER_2)) {
                 result.Add(nameof(ESubscriptionPolicy.TIER_2));
-            if(!role.HasFlag(ESubscriptionPolicy.TIER_3))
+            }
+
+            if(!role.HasFlag(ESubscriptionPolicy.TIER_3)) {
                 result.Add(nameof(ESubscriptionPolicy.TIER_3));
-            if(!role.HasFlag(ESubscriptionPolicy.PREMIUM))
+            }
+
+            if(!role.HasFlag(ESubscriptionPolicy.PREMIUM)) {
                 result.Add(nameof(ESubscriptionPolicy.PREMIUM));
+            }
 
             return result;
         }
 
         [NotNull]
-        public static IEnumerable<string> GetRoles(this ERoles role)
-        {
+        public static IEnumerable<string> GetRoles(this ERoles role) {
             List<string> result = new List<string>();
 
-            if(role.HasFlag(ERoles.VIEWER))
+            if(role.HasFlag(ERoles.VIEWER)) {
                 result.Add(nameof(ERoles.VIEWER));
-            if(role.HasFlag(ERoles.MODERATOR))
+            }
+
+            if(role.HasFlag(ERoles.MODERATOR)) {
                 result.Add(nameof(ERoles.MODERATOR));
-            if(role.HasFlag(ERoles.EDITOR))
+            }
+
+            if(role.HasFlag(ERoles.EDITOR)) {
                 result.Add(nameof(ERoles.EDITOR));
-            if(role.HasFlag(ERoles.SERVICE))
+            }
+
+            if(role.HasFlag(ERoles.SERVICE)) {
                 result.Add(nameof(ERoles.SERVICE));
-            if(role.HasFlag(ERoles.ADMIN))
+            }
+
+            if(role.HasFlag(ERoles.ADMIN)) {
                 result.Add(nameof(ERoles.ADMIN));
+            }
 
             return result;
         }
 
-        public static bool HasPaymentPolicy(this ESubscriptionPolicy policy, IEnumerable<Claim> claims)
-        {
-            if(policy == ESubscriptionPolicy.NONE)
+        public static bool HasPaymentPolicy(this ESubscriptionPolicy policy, IEnumerable<Claim> claims) {
+            if(policy == ESubscriptionPolicy.NONE) {
                 return true;
+            }
 
             Claim claim = claims?.FirstOrDefault(x => x.Type.Equals(nameof(EClaimTypes.SUBSCRIPTION_LEVEL)));
-            if(claim == null)
+            if(claim == null) {
                 return false;
+            }
 
             Enum.TryParse(claim.Value, out ESubscriptionPolicy value);
             return value.HasFlag(policy);
         }
-        #endregion
 
+        #region Enums
         [Flags]
         public enum ERoles
         {
@@ -70,7 +83,6 @@ namespace Amsel.Enums.Authentication.Enums
             ADMIN = SERVICE | (1 << 4)
         }
 
-
         public enum ESubscriptionPolicy
         {
             NONE = 0,
@@ -79,5 +91,6 @@ namespace Amsel.Enums.Authentication.Enums
             TIER_3 = TIER_2 | (1 << 2),
             PREMIUM = TIER_3 | (1 << 3)
         }
+        #endregion
     }
 }

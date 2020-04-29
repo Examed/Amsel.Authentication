@@ -1,5 +1,4 @@
-﻿namespace Amsel.Resources.Authentication.Controller
-{
+﻿namespace Amsel.Resources.Authentication.Controller {
     public static class AccountControllerResources
     {
         public const string CREATE = "create/{name}";

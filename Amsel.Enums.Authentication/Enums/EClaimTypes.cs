@@ -1,5 +1,5 @@
-﻿namespace Amsel.Enums.Authentication.Enums
-{
+﻿namespace Amsel.Enums.Authentication.Enums {
+    #region Enums
     public enum EClaimTypes
     {
         TWITCH_ID,
@@ -9,4 +9,5 @@
         TENANT_EDITOR,
         SUBSCRIPTION_LEVEL
     }
+    #endregion
 }

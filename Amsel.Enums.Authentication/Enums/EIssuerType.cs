@@ -1,5 +1,5 @@
-﻿namespace Amsel.Enums.Authentication.Enums
-{
+﻿namespace Amsel.Enums.Authentication.Enums {
+    #region Enums
     public enum EIssuerType
     {
         WEBSITE_TWITCH,
@@ -7,4 +7,5 @@
         SERVICE_SECRET,
         WEBSITE_SESSION
     }
+    #endregion
 }

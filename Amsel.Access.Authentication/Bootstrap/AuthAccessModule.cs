@@ -2,13 +2,11 @@
 using Amsel.Access.Tenant.Bootstrap;
 using Autofac;
 
-namespace Amsel.Access.Authentication.Bootstrap
-{
+namespace Amsel.Access.Authentication.Bootstrap {
     /// <inheritdoc/>
     public class AuthenticationAccessModule : Module
     {
-        protected override void Load(ContainerBuilder builder)
-        {
+        protected override void Load(ContainerBuilder builder) {
             builder.RegisterModule(new TenantAccessModule());
             builder.RegisterType<TenantServiceAccess>();
             builder.RegisterType<TestAccess>();

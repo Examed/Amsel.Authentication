@@ -6,13 +6,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Amsel.Access.Authentication.Services
-{
-    public class TestServiceAccess : TestAccess
-    {
-        public TestServiceAccess(ISecretAuthenticationService authentication) : base(authentication) { }
-    }
-
+namespace Amsel.Access.Authentication.Services {
     public class TestAccess : GenericAccess
     {
         [NotNull] public static readonly UriBuilder AnonymousURL = UriBuilderFactory.GetAPIBuilder("auth", "/test", "/Anonymous");
@@ -21,18 +15,19 @@ namespace Amsel.Access.Authentication.Services
         public TestAccess() { }
         public TestAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
-        #region PUBLIC METHODES
-        public async Task<string> GetAnonymousTestAsync()
-        {
+        public async Task<string> GetAnonymousTestAsync() {
             HttpResponseMessage response = await GetAsync(AnonymousURL).ConfigureAwait(false);
             return await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
         }
 
-        public async Task<string> GetAuthorizedTestAsync()
-        {
+        public async Task<string> GetAuthorizedTestAsync() {
             HttpResponseMessage response = await GetAsync(AuthorizedURL).ConfigureAwait(false);
             return await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
         }
-        #endregion
+    }
+
+    public class TestServiceAccess : TestAccess
+    {
+        public TestServiceAccess(ISecretAuthenticationService authentication) : base(authentication) { }
     }
 }

@@ -11,29 +11,24 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Amsel.Access.Authentication.Services
-{
-    public class AccountServiceAccess : AccountAccess
-    {
-        public AccountServiceAccess(ISecretAuthenticationService authentication) : base(authentication) { }
-    }
-
+namespace Amsel.Access.Authentication.Services {
     public class AccountAccess : GenericAccess
     {
         private const bool RequestLocal = false;
-
         [NotNull]
         private static readonly UriBuilder AllAccountURL = UriBuilderFactory.GetAPIBuilder(AuthEndpointResources.ENDPOINT, AuthEndpointResources.ACCOUNT, AccountControllerResources.GET_ALL, RequestLocal);
 
         public AccountAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
-        #region PUBLIC METHODES
         [NotNull]
-        public async Task<IEnumerable<Account>> GetAllAsync()
-        {
+        public async Task<IEnumerable<Account>> GetAllAsync() {
             HttpResponseMessage response = await GetAsync(AllAccountURL).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<IEnumerable<Account>>().ConfigureAwait(false);
         }
-        #endregion
+    }
+
+    public class AccountServiceAccess : AccountAccess
+    {
+        public AccountServiceAccess(ISecretAuthenticationService authentication) : base(authentication) { }
     }
 }

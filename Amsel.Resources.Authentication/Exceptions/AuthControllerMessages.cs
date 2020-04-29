@@ -1,5 +1,4 @@
-﻿namespace Amsel.Resources.Authentication.Exceptions
-{
+﻿namespace Amsel.Resources.Authentication.Exceptions {
     public static class AuthControllerMessages
     {
         public const string BANNED = "The Account is Banned from the System";

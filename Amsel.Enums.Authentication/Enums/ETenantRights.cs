@@ -1,7 +1,7 @@
 ﻿using System;
 
-namespace Amsel.Enums.Authentication.Enums
-{
+namespace Amsel.Enums.Authentication.Enums {
+    #region Enums
     [Flags]
     public enum ETenantRights
     {
@@ -10,4 +10,5 @@ namespace Amsel.Enums.Authentication.Enums
         MODERATOR = 1 << 1,
         EDITOR = MODERATOR | (1 << 2)
     }
+    #endregion
 }

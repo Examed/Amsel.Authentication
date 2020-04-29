@@ -1,5 +1,4 @@
-﻿namespace Amsel.Resources.Authentication.Cookie
-{
+﻿namespace Amsel.Resources.Authentication.Cookie {
     public static class AuthCookieResources
     {
         public const string REDIRECT = "Auth.Redirect";
