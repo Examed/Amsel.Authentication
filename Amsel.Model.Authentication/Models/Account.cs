@@ -18,9 +18,12 @@ namespace Amsel.Model.Authentication.AccountModels {
     [ComplexType]
     public partial class Account : AccountInfo, IGuidEntity, ISynchronize<TenantEntity>
     {
-        protected Account() { }
+        protected Account()
+        {
+        }
 
-        public Account(string name, string twitchId = null) {
+        public Account(string name, string twitchId = null)
+        {
             Name = name;
             TwitchId = twitchId;
         }
@@ -33,95 +36,122 @@ namespace Amsel.Model.Authentication.AccountModels {
         public virtual ICollection<TenantRight> TenantRights { get; protected set; } = new List<TenantRight>();
         public virtual TwitchToken TwitchToken { get; protected set; }
 
-        public void AddTenantRights([NotNull] Account tenant, ETenantRights rights) {
-            if(tenant == null) {
+        #region public methods
+        public void AddTenantRights([NotNull] Account tenant, ETenantRights rights)
+        {
+            if(tenant == null)
+            {
                 throw new ArgumentNullException(nameof(tenant));
             }
 
             TenantRight current = TenantRights.FirstOrDefault(x => x.TenantId == tenant.Id);
-            if(current == null) {
+            if(current == null)
+            {
                 TenantRights.Add(new TenantRight(rights, tenant));
-            } else {
+            } else
+            {
                 current.Add(rights);
             }
         }
 
         public void GenerateClientSecret() => ClientSecret = CryptoGuid.GetExtendedCryptoString();
 
-        public List<Claim> GetClaims() {
+        public List<Claim> GetClaims()
+        {
             List<Claim> claimsIdentity = new List<Claim> {
                 (Admin
                 ? (new Claim(ClaimTypes.Role, AuthRoles.ERoles.ADMIN.ToString()))
                 : (new Claim(ClaimTypes.Role, AuthRoles.ERoles.VIEWER.ToString()))),
                 new Claim(ClaimTypes.Name, Name) };
 
-            if(Admin || Premium) {
+            if(Admin || Premium)
+            {
                 claimsIdentity.Add(new Claim(nameof(EClaimTypes.SUBSCRIPTION_LEVEL), nameof(AuthRoles.ESubscriptionPolicy.PREMIUM)));
             }
 
             string banned = GetRightsAccountString(TenantRights.Where(x => x.IsBanned()));
-            if(!string.IsNullOrEmpty(banned)) {
+            if(!string.IsNullOrEmpty(banned))
+            {
                 claimsIdentity.Add(new Claim(EClaimTypes.TENANT_BANNED.ToString(), banned));
             }
 
             string editor = GetRightsAccountString(TenantRights.Where(x => x.HasRights(ETenantRights.EDITOR)));
-            if(!string.IsNullOrEmpty(editor)) {
+            if(!string.IsNullOrEmpty(editor))
+            {
                 claimsIdentity.Add(new Claim(EClaimTypes.TENANT_EDITOR.ToString(), editor));
             }
 
             string moderator = GetRightsAccountString(TenantRights.Where(x
                 => !x.HasRights(ETenantRights.EDITOR) && x.HasRights(ETenantRights.MODERATOR)));
-            if(!string.IsNullOrEmpty(moderator)) {
+            if(!string.IsNullOrEmpty(moderator))
+            {
                 claimsIdentity.Add(new Claim(EClaimTypes.TENANT_MODERATOR.ToString(), moderator));
             }
 
             return claimsIdentity;
         }
 
-        public void RemoveRights([NotNull] Account tenant, ETenantRights rights) {
-            if(tenant == null) {
+        public void RemoveRights([NotNull] Account tenant, ETenantRights rights)
+        {
+            if(tenant == null)
+            {
                 throw new ArgumentNullException(nameof(tenant));
             }
 
-            if(!Enum.IsDefined(typeof(ETenantRights), rights)) {
+            if(!Enum.IsDefined(typeof(ETenantRights), rights))
+            {
                 throw new InvalidEnumArgumentException(nameof(rights), (int)rights, typeof(ETenantRights));
             }
 
             TenantRight current = TenantRights.FirstOrDefault(x => (x != null) && (x.TenantId == tenant.Id));
-            if(current == null) {
+            if(current == null)
+            {
                 return;
             }
 
             current.Remove(rights);
-            if(current.Rights.HasNoFlags<ETenantRights>()) {
+            if(current.Rights.HasNoFlags<ETenantRights>())
+            {
                 TenantRights.Remove(current);
             }
         }
 
-        public void SetTwitchToken(TwitchToken twitchToken) {
-            if((twitchToken == null) || twitchToken.IsExpired()) {
+        public void SetTwitchToken(TwitchToken twitchToken)
+        {
+            if((twitchToken == null) || twitchToken.IsExpired())
+            {
                 return;
             }
 
-            if(TwitchToken == null) {
+            if(TwitchToken == null)
+            {
                 TwitchToken = twitchToken;
-            } else if(TwitchToken.IsExpired() || twitchToken.Scope.HasFlag(TwitchToken.Scope)) {
+            } else if(TwitchToken.IsExpired() || twitchToken.Scope.HasFlag(TwitchToken.Scope))
+            {
                 TwitchToken.UpdateToken(twitchToken);
             }
         }
+        #endregion
 
-        private string GetRightsAccountString([NotNull] IEnumerable<TenantRight> rights) {
-            if((rights == null) || !rights.Any()) {
+        #region private methods
+        private string GetRightsAccountString([NotNull] IEnumerable<TenantRight> rights)
+        {
+            if((rights == null) || !rights.Any())
+            {
                 return string.Empty;
             }
 
             StringBuilder builder = new StringBuilder();
-            foreach(TenantRight item in from TenantRight item in rights where (item != null) && (item.Tenant != null) select item) {
+            foreach(TenantRight item in from TenantRight item in rights
+                where (item != null) && (item.Tenant != null)
+                select item)
+            {
                 builder.Append($"{item.Tenant.Name};");
             }
 
             return builder.ToString().TrimEnd(';');
         }
+        #endregion
     }
 
     public class AccountBase
@@ -145,6 +175,7 @@ namespace Amsel.Model.Authentication.AccountModels {
         [DefaultValue(false)]
         public virtual bool Premium { get; protected set; }
 
+        #region public methods
         /// <summary>
         /// Ban the Account and restricted it from authenticate
         /// </summary>
@@ -154,5 +185,6 @@ namespace Amsel.Model.Authentication.AccountModels {
         /// UnBan the Account and allow it to authenticate
         /// </summary>
         public virtual void UnBanAccount() => Banned = false;
+        #endregion
     }
 }

@@ -16,19 +16,27 @@ namespace Amsel.Access.Authentication.Services {
         public static readonly UriBuilder PublicKeyURL = UriBuilderFactory.GetAPIBuilder(AuthEndpointResources.ENDPOINT, AuthEndpointResources.KEY, KeyControllerResources.PUBLIC_KEY, RequestLocal);
         private const bool RequestLocal = false;
 
-        public KeyAccess() : base() { }
+        public KeyAccess() : base()
+        {
+        }
 
+        #region public methods
         [NotNull]
-        public async Task<RSACryptoServiceProvider> GetPublicKeyAsync() {
+        public async Task<RSACryptoServiceProvider> GetPublicKeyAsync()
+        {
             string content = await GetPublicKeyStringAsync().ConfigureAwait(false);
             return RSACryptoKeyHelper.PublicKeyFromString(content);
         }
+        #endregion
 
+        #region private methods
         [NotNull]
-        private async Task<string> GetPublicKeyStringAsync() {
+        private async Task<string> GetPublicKeyStringAsync()
+        {
             HttpResponseMessage response = await GetAsync(PublicKeyURL).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             return await (response.Content?.ReadAsStringAsync()).ConfigureAwait(false);
         }
+        #endregion
     }
 }
