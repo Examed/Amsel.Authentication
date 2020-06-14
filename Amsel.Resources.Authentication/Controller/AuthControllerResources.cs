@@ -1,6 +1,5 @@
 ﻿namespace Amsel.Resources.Authentication.Controller {
-    public static class AuthControllerResources
-    {
+    public static class AuthControllerResources {
         public const string LOGIN = "";
         public const string LOGOUT = "logout";
         // TODO

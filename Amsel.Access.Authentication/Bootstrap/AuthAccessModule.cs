@@ -4,11 +4,8 @@ using Autofac;
 
 namespace Amsel.Access.Authentication.Bootstrap {
     /// <inheritdoc/>
-    public class AuthenticationAccessModule : Module
-    {
-        #region protected methods
-        protected override void Load(ContainerBuilder builder)
-        {
+    public class AuthenticationAccessModule : Module {
+        protected override void Load(ContainerBuilder builder) {
             builder.RegisterModule(new TenantAccessModule());
             builder.RegisterType<TenantServiceAccess>();
             builder.RegisterType<TestAccess>();
@@ -19,6 +16,5 @@ namespace Amsel.Access.Authentication.Bootstrap {
 
             base.Load(builder);
         }
-        #endregion
     }
 }

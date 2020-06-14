@@ -1,7 +1,6 @@
 ﻿namespace Amsel.Enums.Authentication.Enums {
     #region Enums
-    public enum EClaimTypes
-    {
+    public enum EClaimTypes {
         TWITCH_ID,
         TWITCH_TOKEN,
         TENANT_BANNED,

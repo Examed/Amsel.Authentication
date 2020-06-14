@@ -3,8 +3,7 @@
 namespace Amsel.Enums.Authentication.Enums {
     #region Enums
     [Flags]
-    public enum ETwitchScope
-    {
+    public enum ETwitchScope {
         NONE = 0,
 
         CHANNEL_CHECK_SUBSCRIPTION = 1 << 1,

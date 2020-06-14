@@ -3,8 +3,7 @@
 namespace Amsel.Enums.Authentication.Enums {
     #region Enums
     [Flags]
-    public enum ETenantRights
-    {
+    public enum ETenantRights {
         NONE = 0,
         BANNED = 1 << 0,
         MODERATOR = 1 << 1,
