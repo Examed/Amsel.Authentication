@@ -19,7 +19,8 @@ namespace Amsel.Model.Authentication.AccountModels {
     public partial class Account : AccountInfo, IGuidEntity, ISynchronize<TenantEntity> {
         protected Account() { }
 
-        public Account(string name, string twitchId = null) {
+        public Account(string name, string twitchId = null)
+        {
             Name = name;
             TwitchId = twitchId;
         }
@@ -32,7 +33,8 @@ namespace Amsel.Model.Authentication.AccountModels {
         public virtual ICollection<TenantRight> TenantRights { get; protected set; } = new List<TenantRight>();
         public virtual TwitchToken TwitchToken { get; protected set; }
 
-        public void AddTenantRights([NotNull] Account tenant, ETenantRights rights) {
+        public void AddTenantRights([NotNull] Account tenant, ETenantRights rights)
+        {
             if (tenant == null) {
                 throw new ArgumentNullException(nameof(tenant));
             }
@@ -48,7 +50,8 @@ namespace Amsel.Model.Authentication.AccountModels {
 
         public void GenerateClientSecret() => ClientSecret = CryptoGuid.GetExtendedCryptoString();
 
-        public List<Claim> GetClaims() {
+        public List<Claim> GetClaims()
+        {
             List<Claim> claimsIdentity = new List<Claim> {
                 (Admin
                 ? (new Claim(ClaimTypes.Role, AuthRoles.ERoles.ADMIN.ToString()))
@@ -70,8 +73,8 @@ namespace Amsel.Model.Authentication.AccountModels {
                 claimsIdentity.Add(new Claim(EClaimTypes.TENANT_EDITOR.ToString(), editor));
             }
 
-            string moderator = GetRightsAccountString(TenantRights.Where(x
-                => !x.HasRights(ETenantRights.EDITOR) && x.HasRights(ETenantRights.MODERATOR)));
+            string moderator = GetRightsAccountString(TenantRights.Where(x =>
+                !x.HasRights(ETenantRights.EDITOR) && x.HasRights(ETenantRights.MODERATOR)));
             if (!string.IsNullOrEmpty(moderator)) {
                 claimsIdentity.Add(new Claim(EClaimTypes.TENANT_MODERATOR.ToString(), moderator));
             }
@@ -79,7 +82,8 @@ namespace Amsel.Model.Authentication.AccountModels {
             return claimsIdentity;
         }
 
-        public void RemoveRights([NotNull] Account tenant, ETenantRights rights) {
+        public void RemoveRights([NotNull] Account tenant, ETenantRights rights)
+        {
             if (tenant == null) {
                 throw new ArgumentNullException(nameof(tenant));
             }
@@ -99,7 +103,8 @@ namespace Amsel.Model.Authentication.AccountModels {
             }
         }
 
-        public void SetTwitchToken(TwitchToken twitchToken) {
+        public void SetTwitchToken(TwitchToken twitchToken)
+        {
             if ((twitchToken == null) || twitchToken.IsExpired()) {
                 return;
             }
@@ -112,7 +117,8 @@ namespace Amsel.Model.Authentication.AccountModels {
             }
         }
 
-        private string GetRightsAccountString([NotNull] IEnumerable<TenantRight> rights) {
+        private string GetRightsAccountString([NotNull] IEnumerable<TenantRight> rights)
+        {
             if ((rights == null) || !rights.Any()) {
                 return string.Empty;
             }

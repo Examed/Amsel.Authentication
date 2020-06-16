@@ -7,7 +7,8 @@ namespace Amsel.Model.Authentication.Models {
         protected AuthToken() { }
         public AuthToken(string token) => Token = token;
         [JsonConstructor]
-        public AuthToken(string token, DateTime expireTime) {
+        public AuthToken(string token, DateTime expireTime)
+        {
             Token = token;
             ExpireTime = expireTime;
         }
@@ -16,7 +17,8 @@ namespace Amsel.Model.Authentication.Models {
         [Required]
         public string Token { get; set; }
 
-        public bool Expired() {
+        public bool Expired()
+        {
             if (string.IsNullOrEmpty(Token)) {
                 return true;
             }

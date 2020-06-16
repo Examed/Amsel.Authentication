@@ -6,7 +6,8 @@ using System.Text;
 
 namespace Amsel.Enums.Authentication.EnumStrings {
     public static class TwitchScopeHelper {
-        public static ETwitchScope GetScopes([NotNull] this IList<string> scopeList) {
+        public static ETwitchScope GetScopes([NotNull] this IList<string> scopeList)
+        {
             if (scopeList == null) {
                 throw new ArgumentNullException(nameof(scopeList));
             }
@@ -144,7 +145,8 @@ namespace Amsel.Enums.Authentication.EnumStrings {
             return scope;
         }
 
-        public static string ToScopeString(this ETwitchScope scope) {
+        public static string ToScopeString(this ETwitchScope scope)
+        {
             StringBuilder builder = new StringBuilder();
             if (scope.HasFlag(ETwitchScope.CHANNEL_CHECK_SUBSCRIPTION)) {
                 builder.Append("channel_check_subscription ");

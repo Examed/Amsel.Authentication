@@ -7,7 +7,8 @@ using System.Security.Claims;
 namespace Amsel.Enums.Authentication.Enums {
     public static class AuthRoles {
         [NotNull]
-        public static IEnumerable<string> GetPaymentPolicy(this ESubscriptionPolicy role) {
+        public static IEnumerable<string> GetPaymentPolicy(this ESubscriptionPolicy role)
+        {
             List<string> result = new List<string> { role.ToString(), nameof(ESubscriptionPolicy.NONE) };
 
             if (!role.HasFlag(ESubscriptionPolicy.TIER_1)) {
@@ -30,7 +31,8 @@ namespace Amsel.Enums.Authentication.Enums {
         }
 
         [NotNull]
-        public static IEnumerable<string> GetRoles(this ERoles role) {
+        public static IEnumerable<string> GetRoles(this ERoles role)
+        {
             List<string> result = new List<string>();
 
             if (role.HasFlag(ERoles.VIEWER)) {
@@ -56,7 +58,8 @@ namespace Amsel.Enums.Authentication.Enums {
             return result;
         }
 
-        public static bool HasPaymentPolicy(this ESubscriptionPolicy policy, IEnumerable<Claim> claims) {
+        public static bool HasPaymentPolicy(this ESubscriptionPolicy policy, IEnumerable<Claim> claims)
+        {
             if (policy == ESubscriptionPolicy.NONE) {
                 return true;
             }

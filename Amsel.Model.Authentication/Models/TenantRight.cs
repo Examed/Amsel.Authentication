@@ -11,7 +11,8 @@ namespace Amsel.Model.Authentication.AccountModels {
         public class TenantRight {
             protected TenantRight() { }
 
-            public TenantRight(ETenantRights rights, [NotNull] Account tenant) {
+            public TenantRight(ETenantRights rights, [NotNull] Account tenant)
+            {
                 if (!Enum.IsDefined(typeof(ETenantRights), rights)) {
                     throw new InvalidEnumArgumentException(nameof(rights), (int)rights, typeof(ETenantRights));
                 }

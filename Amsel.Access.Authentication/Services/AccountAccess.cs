@@ -20,7 +20,8 @@ namespace Amsel.Access.Authentication.Services {
         public AccountAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
         [NotNull]
-        public async Task<IEnumerable<Account>> GetAllAsync() {
+        public async Task<IEnumerable<Account>> GetAllAsync()
+        {
             HttpResponseMessage response = await GetAsync(AllAccountURL).ConfigureAwait(false);
             return await response.DeserializeOrDefaultAsync<IEnumerable<Account>>().ConfigureAwait(false);
         }

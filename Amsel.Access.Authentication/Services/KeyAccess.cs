@@ -18,13 +18,15 @@ namespace Amsel.Access.Authentication.Services {
         public KeyAccess() : base() { }
 
         [NotNull]
-        public async Task<RSACryptoServiceProvider> GetPublicKeyAsync() {
+        public async Task<RSACryptoServiceProvider> GetPublicKeyAsync()
+        {
             string content = await GetPublicKeyStringAsync().ConfigureAwait(false);
             return RSACryptoKeyHelper.PublicKeyFromString(content);
         }
 
         [NotNull]
-        private async Task<string> GetPublicKeyStringAsync() {
+        private async Task<string> GetPublicKeyStringAsync()
+        {
             HttpResponseMessage response = await GetAsync(PublicKeyURL).ConfigureAwait(false);
             response.EnsureSuccessStatusCode();
             return await (response.Content?.ReadAsStringAsync()).ConfigureAwait(false);

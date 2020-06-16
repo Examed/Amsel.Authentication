@@ -14,12 +14,14 @@ namespace Amsel.Access.Authentication.Services {
         public TestAccess() { }
         public TestAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
 
-        public async Task<string> GetAnonymousTestAsync() {
+        public async Task<string> GetAnonymousTestAsync()
+        {
             HttpResponseMessage response = await GetAsync(AnonymousURL).ConfigureAwait(false);
             return await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
         }
 
-        public async Task<string> GetAuthorizedTestAsync() {
+        public async Task<string> GetAuthorizedTestAsync()
+        {
             HttpResponseMessage response = await GetAsync(AuthorizedURL).ConfigureAwait(false);
             return await (response?.Content?.ReadAsStringAsync()).ConfigureAwait(false);
         }
