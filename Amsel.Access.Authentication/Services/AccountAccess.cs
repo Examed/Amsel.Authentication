@@ -17,7 +17,7 @@ namespace Amsel.Access.Authentication.Services {
         [NotNull]
         private static readonly UriBuilder AllAccountURL = UriBuilderFactory.GetAPIBuilder(AuthEndpointResources.ENDPOINT, AuthEndpointResources.ACCOUNT, AccountControllerResources.GET_ALL, RequestLocal);
 
-        public AccountAccess(IAuthenticationService authenticationService) : base(authenticationService) { }
+        public AccountAccess(IAuthenticationTokenService authenticationService) : base(authenticationService) { }
 
         [NotNull]
         public async Task<IEnumerable<Account>> GetAllAsync()
