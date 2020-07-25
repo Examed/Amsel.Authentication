@@ -12,6 +12,7 @@ namespace Amsel.Access.Authentication.Services {
         [NotNull] public static readonly UriBuilder AuthorizedURL = UriBuilderFactory.GetAPIBuilder("auth", "/test", "/Authorized");
 
         public TestAccess() { }
+
         public TestAccess(IAuthenticationTokenService authenticationService) : base(authenticationService) { }
 
         public async Task<string> GetAnonymousTestAsync()

@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Amsel.Model.Authentication.Models {
     public class AuthToken {
         protected AuthToken() { }
+
         public AuthToken(string token) => Token = token;
         [JsonConstructor]
         public AuthToken(string token, DateTime expireTime)
