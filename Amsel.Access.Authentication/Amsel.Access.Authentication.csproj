@@ -16,7 +16,6 @@
     <ProjectReference Include="..\..\..\Amsel.Framework\Amsel.Framework.Structure\Amsel.Framework.Structure\Amsel.Framework.Structure.csproj" />
     <ProjectReference Include="..\..\..\Amsel.Framework\Amsel.Framework.Utilities\Amsel.Framework.Utilities.csproj" />
     <ProjectReference Include="..\..\Amsel.Tenant\Amsel.Access.Tenant\Amsel.Access.Tenant.csproj" />
-    <ProjectReference Include="..\Amsel.Resources.Authentication\Amsel.Resources.Authentication.csproj" />
   </ItemGroup>
 
 

@@ -5,15 +5,17 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Amsel.Model.Authentication.AccountModels {
-    public partial class Account {
+namespace Amsel.Model.Authentication.AccountModels
+{
+    public partial class Account
+    {
         [Owned]
-        public class TenantRight {
+        public class TenantRight
+        {
             protected TenantRight() { }
 
-            public TenantRight(ETenantRights rights, [NotNull] Account tenant)
-            {
-                if (!Enum.IsDefined(typeof(ETenantRights), rights)) {
+            public TenantRight(ETenantRights rights, Account tenant) {
+                if(!Enum.IsDefined(typeof(ETenantRights), rights)) {
                     throw new InvalidEnumArgumentException(nameof(rights), (int)rights, typeof(ETenantRights));
                 }
 
@@ -22,8 +24,10 @@ namespace Amsel.Model.Authentication.AccountModels {
             }
 
             public ETenantRights Rights { get; set; }
+
             [ForeignKey(nameof(TenantId))]
             public virtual Account Tenant { get; set; }
+
             public Guid? TenantId { get; set; }
 
             public void Add(ETenantRights rights) => Rights |= rights;
